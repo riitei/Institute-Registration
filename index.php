@@ -146,7 +146,7 @@ if ($_FILES["thum"]["error"] > 0) {
     }
 
     .form {
-        margin-left: 200px;
+        margin-left: 250px;
         margin-top: 100px;
     }
 </style>
