@@ -55,7 +55,7 @@
             </tr>
             <tr>
                 <td>
-                    <span>&nbsp;&nbsp;&nbsp;</span> 電話：
+                    <span>&nbsp;&nbsp;&nbsp;</span> 行動電話：
                 </td>
                 <td>
                     <input type="number" name="phone" size="20" placeholder="輸入數字">
@@ -71,7 +71,7 @@
             </tr>
             <tr>
                 <td>
-                    <span>&nbsp;&nbsp;&nbsp;</span> Email 位址:
+                    <span>&nbsp;&nbsp;&nbsp;</span> Email:
                 </td>
                 <td>
                     <input type="email" name="email">
@@ -129,10 +129,18 @@
             window.alert("身份證字號錯誤!");
             $error++;
         }
-        if (!checkEmail(document.Form.email.value)) {
+
+        emailRule = /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z]+$/;
+        if (emailRule.test(Form.email.value)==false) {
             window.alert("Email 位址資料錯誤!");
             $error++
         }
+        reg = /^09[0-9]{8}$/;
+        if (reg.test(Form.phone.value) == false) {
+            window.alert('行動電話格式錯誤，範例:0912345678');
+            $error++
+        };
+        console.log(Form.phone.value);
 
         if ($error == 0) {
             if (window.confirm("確定提交表單嗎?")) {
