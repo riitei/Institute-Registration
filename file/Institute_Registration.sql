@@ -56,10 +56,12 @@ DROP TABLE IF EXISTS `candidates_information`;
 CREATE TABLE `candidates_information` (
   `candidates_information_id` int(11) NOT NULL COMMENT '身分證',
   `candidates_information_name` varchar(45) NOT NULL,
-  `candidates_information_photo_path` varchar(45) NOT NULL,
+  `candidates_information_photo_path` varchar(45) DEFAULT NULL,
   `candidates_information_gender` varchar(45) NOT NULL,
   `candidates_information_birthday` varchar(45) NOT NULL,
-  `candidates_information_address` tinytext NOT NULL,
+  `candidates_information_address` tinytext,
+  `candidates_information_email` varchar(45) DEFAULT NULL,
+  `candidates_information_phone` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`candidates_information_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -133,4 +135,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-12-12 21:52:23
+-- Dump completed on 2017-12-14 23:49:54

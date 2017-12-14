@@ -9,51 +9,105 @@
 <body>
 
 <div class="form">
+
     <form action="index.php" method="post" name="Form" enctype="multipart/form-data">
+        <table border="0">
+            <tr>
+                <td>
+                    <span style="color: red">＊</span> 姓名：
+                </td>
+                <td>
+                    <input type="text" id="name" name="name" size="20">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>&nbsp;&nbsp;&nbsp;</span> 大頭照：
+                </td>
+                <td>
+                    <input type="file" id="file" name="file">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span style="color: red">＊</span> 性別：
+                </td>
+                <td>
+                    <input type="radio" name="gender" value="male" checked="checked">男
+                    <input type="radio" name="gender" value="female">女
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span style="color: red">＊</span> 出生：
+                </td>
+                <td>
+                    <input type="date" name="birthday" value="1997-01-01" min="1900-01-01" max="9999/12/31">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span style="color: red">＊</span> 身分證：
+                </td>
+                <td>
+                    <input type="text" name="id" size="20">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>&nbsp;&nbsp;&nbsp;</span> 電話：
+                </td>
+                <td>
+                    <input type="number" name="phone" size="20" placeholder="輸入數字">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>&nbsp;&nbsp;&nbsp;</span> 地址：
+                </td>
+                <td>
+                    <input type="text" name="address" size="60">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>&nbsp;&nbsp;&nbsp;</span> Email 位址:
+                </td>
+                <td>
+                    <input type="email" name="email">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span style="color: red">＊</span> 畢業學校和系所：
+                </td>
+                <td>
+                    <input type="text" name="school" size="20" placeholder="真理大學">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span style="color: red">＊</span> 畢業學校和系所：
+                </td>
+                <td>
+                    <input type="text" name="department" size="20" placeholder="資訊管理"><br>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span style="color: red">＊</span> 報考科系：
 
-
-        <span style="color: red">＊</span> 姓名：
-        <input type="text" id="Name" name="name" size="10"><br>
-
-        <span>&nbsp;&nbsp;&nbsp;</span> 大頭照：
-        <input type="file" id="file" name="file"><br>
-
-        <span style="color: red">＊</span> 性別：
-        <input type="radio" name="gender" value="male">男
-        <input type="radio" name="gender" value="female">女<br>
-
-        <span style="color: red">＊</span> 出生：
-        <input type="date" name="birthday" value="2000-01-01" min="1950-01-01" max="2100/12/31">
-        <br>
-
-        <span style="color: red">＊</span> 身分證：
-        <input type="text" id="ID" name="name" size="10"><br>
-        <span>&nbsp;&nbsp;&nbsp;</span> 電話：
-        <input type="number" name="tel" size="10" placeholder="輸入數字"><br>
-        <span>&nbsp;&nbsp;&nbsp;</span> 地址：
-        <input type="text" name="address" size="60"><br>
-
-
-        <span>&nbsp;&nbsp;&nbsp;</span> Email 位址:
-        <input type="email" name="Email">
-
-
-        <br><br>
-
-        <span style="color: red">＊</span> 畢業學校和系所：
-        <input type="text" name="school" size="20" placeholder="真理大學"><br>
-        <span style="color: red">＊</span> 畢業學校和系所：
-        <input type="text" name="department" size="20" placeholder="資訊管理"><br>
-
-
-        <span style="color: red">＊</span> 報考科系：
-        <select name="department">
-            <option value="資工系">資工系</option>
-            <option value="音樂系">音樂系</option>
-            <option value="美術系">美術系</option>
-            <option value="教育系" selected="true">教育系</option>
-        </select><br><br>
-
+                </td>
+                <td>
+                    <select name="department">
+                        <option value="資工系">資工系</option>
+                        <option value="音樂系">音樂系</option>
+                        <option value="美術系">美術系</option>
+                        <option value="教育系" selected="true">教育系</option>
+                    </select><br><br>
+                </td>
+            </tr>
+        </table>
         <input type="submit" value="送出" OnClick="CheckInput();">
         <input type="reset" value="清除">
 
@@ -65,12 +119,26 @@
 
 
     function CheckInput() {
-        if (!checkLength(document.Form.Name.value, 2))
+        $error = 0;
+        if (!checkLength(document.Form.name.value, 2)) {
             window.alert("姓名資料錯誤!");
-        if (!checkID(document.Form.ID.value))
+            $error++;
+        }
+
+        if (!checkID(document.Form.id.value)) {
             window.alert("身份證字號錯誤!");
-        if (!checkEmail(document.Form.Email.value))
+            $error++;
+        }
+        if (!checkEmail(document.Form.email.value)) {
             window.alert("Email 位址資料錯誤!");
+            $error++
+        }
+
+        if ($error == 0) {
+            if (window.confirm("確定提交表單嗎?")) {
+                document.getElementsByName("Form").submit();
+            }
+        }
     }
 
     function checkLength(dat, len) {
@@ -78,7 +146,7 @@
     }
 
     function checkEmail(id) {
-        return ( checkLength(id, 5) && id.indexOf("@") != -1 );
+        return (checkLength(id, 5) && id.indexOf("@") != -1);
     }
 
     function checkID(id) {
