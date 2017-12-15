@@ -6,11 +6,20 @@
  * Time: 00:15
  */
 //include_once "autoload.php";
-include 'Department.php';
-
-$department = new Department();
+//include 'Department.php';
+include 'School.php';
+//$department = new Department();
+$school = new School();
 //$department= $department->department_search();
 echo 'ntcu <br>';
-foreach ( $department->department_search() as $key =>$value) {
-    echo $key.'_'.$value['department'] . '<br>';
+
+foreach ($school->school_search() as $value){
+    echo $value['school_name'].'<br>';
 }
+
+
+echo '<br><br>';
+//
+//foreach ( $department->department_search() as $key =>$value) {
+//     echo $key.'_'.$value['department'] . '<br>';
+//}

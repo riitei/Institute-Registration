@@ -8,6 +8,8 @@
 
     <link rel="stylesheet" type="text/css" href="index.css">
     <?php
+    include 'DBconnect.php';
+    include 'School.php';
     include 'Department.php';
     ?>
 </head>
@@ -88,7 +90,15 @@
                     <span style="color: red">＊</span> 畢業學校和系所：
                 </td>
                 <td>
-                    <input type="text" name="school" size="20" placeholder="真理大學">
+                    <select id="school" name="school">
+                        <?php
+                        $school = new School();
+                        foreach ($school->school_search() as $value) {
+                            echo $value['school_name'] . '<br>';
+                            echo "  <option value=" . $value['school_name'] . ">" . $value['school_name'] . "</option>";
+                        }
+                        ?>
+                    </select>
                 </td>
             </tr>
             <tr>
@@ -110,18 +120,12 @@
                         $ntcu_department = new Department();
                         foreach ($ntcu_department->department_search() as $value) {
                             echo $value['department'] . '<br>';
-                            echo "  <option value=" . $value['department'] . ">".$value['department']."</option>";
+                            echo "  <option value=" . $value['department'] . ">" . $value['department'] . "</option>";
                         }
-
-
                         ?>
 
-<!--                        <option value="資工系">資工系</option>-->
-<!--                        <option value="音樂系">音樂系</option>-->
-<!--                        <option value="美術系">美術系</option>-->
-<!--                        <option value="教育系" selected="true">教育系</option>-->
 
-                    </select><br><br>
+                    </select>
                 </td>
             </tr>
         </table>
@@ -132,5 +136,13 @@
 </div>
 
 </body>
+<script>
+    $(document).ready(function () {
+        $("#s")
+
+    }
+
+
+</script>
 </html>
 
