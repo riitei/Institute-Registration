@@ -91,6 +91,7 @@
                 </td>
                 <td>
                     <select id="school" name="school">
+                        <option value="school_null">請選擇畢業學校</option>
                         <?php
                         $school = new School();
                         foreach ($school->school_search() as $value) {
@@ -103,10 +104,14 @@
             </tr>
             <tr>
                 <td>
-                    <span style="color: red">＊</span> 畢業學校和系所：
+                    <span style="color: red">＊</span> 請選擇畢業科系：
                 </td>
                 <td>
-                    <input type="text" name="department" size="20" placeholder="資訊管理"><br>
+                    <select id="school_department" name="school_department">
+                        <option value="school_department_null">畢業科系</option>
+                        <option value="cis">cis</option>
+
+                    </select>
                 </td>
             </tr>
             <tr>
@@ -137,10 +142,13 @@
 
 </body>
 <script>
-    $(document).ready(function () {
-        $("#s")
+    console.log("ans: "+Form.school.value);
 
-    }
+    $(document).ready(function () {
+        $("#school").change(function () {
+            console.log($("#school").val());
+        });
+    })
 
 
 </script>
