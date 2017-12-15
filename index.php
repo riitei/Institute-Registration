@@ -3,7 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>台中教育大學＿碩博班報名系統</title>
-    <script src="jquery-3.2.1.min.js"></script>
+    <script src="api/jquery-3.2.1.min.js"></script>
+    <script src="index.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="index.css">
+    <?php
+    include 'Department.php';
+    ?>
 </head>
 
 <body>
@@ -100,10 +106,21 @@
                 </td>
                 <td>
                     <select name="department">
-                        <option value="資工系">資工系</option>
-                        <option value="音樂系">音樂系</option>
-                        <option value="美術系">美術系</option>
-                        <option value="教育系" selected="true">教育系</option>
+                        <?php
+                        $ntcu_department = new Department();
+                        foreach ($ntcu_department->department_search() as $value) {
+                            echo $value['department'] . '<br>';
+                            echo "  <option value=" . $value['department'] . ">".$value['department']."</option>";
+                        }
+
+
+                        ?>
+
+<!--                        <option value="資工系">資工系</option>-->
+<!--                        <option value="音樂系">音樂系</option>-->
+<!--                        <option value="美術系">美術系</option>-->
+<!--                        <option value="教育系" selected="true">教育系</option>-->
+
                     </select><br><br>
                 </td>
             </tr>
@@ -114,115 +131,6 @@
     </form>
 </div>
 
-
-<script>
-
-
-    function CheckInput() {
-        $error = 0;
-        if (!checkLength(document.Form.name.value, 2)) {
-            window.alert("姓名資料錯誤!");
-            $error++;
-        }
-
-        if (!checkID(document.Form.id.value)) {
-            window.alert("身份證字號錯誤!");
-            $error++;
-        }
-
-        emailRule = /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z]+$/;
-        if (emailRule.test(Form.email.value)==false) {
-            window.alert("Email 位址資料錯誤!");
-            $error++
-        }
-        reg = /^09[0-9]{8}$/;
-        if (reg.test(Form.phone.value) == false) {
-            window.alert('行動電話格式錯誤，範例:0912345678');
-            $error++
-        };
-        console.log(Form.phone.value);
-
-        if ($error == 0) {
-            if (window.confirm("確定提交表單嗎?")) {
-                document.getElementsByName("Form").submit();
-            }
-        }
-    }
-
-    function checkLength(dat, len) {
-        return (dat.length >= len);
-    }
-
-    function checkEmail(id) {
-        return (checkLength(id, 5) && id.indexOf("@") != -1);
-    }
-
-    function checkID(id) {
-        tab = "ABCDEFGHJKLMNPQRSTUVWXYZIO"
-        A1 = new Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3);
-        A2 = new Array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5);
-        Mx = new Array(9, 8, 7, 6, 5, 4, 3, 2, 1, 1);
-
-        if (id.length != 10) return false;
-        i = tab.indexOf(id.charAt(0));
-        if (i == -1) return false;
-        sum = A1[i] + A2[i] * 9;
-
-        for (i = 1; i < 10; i++) {
-            v = parseInt(id.charAt(i));
-            if (isNaN(v)) return false;
-            sum = sum + v * Mx[i];
-        }
-        if (sum % 10 != 0) return false;
-        return true;
-    }
-
-
-</script>
-
-<?php
-echo 'test <br>';
-echo '性別:__' . $_POST['gender'];
-echo '<br>';
-echo dirname(__FILE__);
-
-echo $_POST['department'] . "<br>";
-
-
-if ($_FILES["thum"]["error"] > 0) {
-
-    echo "Error:" . $_FILES["file"]["error"];
-    //　echo "Error: " . $_FILES["file"]["error"];
-} else {
-    echo "檔案名稱: " . $_FILES["file"]["name"] . "<br>";
-    echo "檔案類型: " . $_FILES["file"]["type"] . "<br>";
-    echo "檔案大小: " . ($_FILES["file"]["size"] / 1024) . " Kb<br />";
-    echo "暫存名稱: " . $_FILES["file"]["tmp_name"] . '<br>';
-
-
-    if (file_exists(dirname(__FILE__) . '/photo/' . $_FILES['file']['name'])) {
-        echo "檔案已經存在，請勿重覆上傳相同檔案";
-    } else {
-        echo '搬移檔案';
-        echo 'in';
-        move_uploaded_file($_FILES['file']['tmp_name'],
-            dirname(__FILE__) . '/photo/' . $_FILES['file']['name']);
-        echo 'out';
-    }
-}
-?>
-
 </body>
 </html>
-<style>
-    input::-webkit-outer-spin-button,
-    input::-webkit-inner-spin-button {
-        -webkit-appearance: none !important;
-        margin: 0;
-    }
 
-    .form {
-        margin-left: 250px;
-        margin-top: 100px;
-    }
-</style>
