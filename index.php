@@ -93,6 +93,7 @@
                     <select id="school" name="school">
                         <option value="school_null">請選擇畢業學校</option>
                         <?php
+                        // 找學校名稱
                         $school = new School();
                         foreach ($school->school_search() as $value) {
                             echo $value['school_name'] . '<br>';
@@ -109,8 +110,6 @@
                 <td>
                     <select id="school_department" name="school_department">
                         <option value="school_department_null">畢業科系</option>
-                        <option value="cis">cis</option>
-
                     </select>
                 </td>
             </tr>
@@ -122,6 +121,7 @@
                 <td>
                     <select name="department">
                         <?php
+                        // 找本校學校碩博班科系
                         $ntcu_department = new Department();
                         foreach ($ntcu_department->department_search() as $value) {
                             echo $value['department'] . '<br>';
@@ -142,23 +142,22 @@
 
 </body>
 <script>
-    console.log("ans: " + Form.school.value);
 
     $(document).ready(function () {
         $("#school").change(function () {
             console.log($("#school").val());
-
+            // 讀取選擇到學校
             $.post("SchoolDepartment.php", {
-                    schoolName: $("#school").val()
+                    schoolName: $("#school").val()//選到學校名單
                 },
 
                 function (data) {
-                    $.each(data, function (index) {
-                        var tribe = data[index];
-                        console.log(tribe);
-                        // $("#title_sel").append
-                        // ("<option value= " + tribe + ">"
-                        //     + tribe + "</option>");
+                    console.log(JSON.parse(data));
+                    $("#school_department").empty();
+                    $.each(JSON.parse(data), function (index, value) {
+                        console.log(value);
+                        $("#school_department").append("<option value=" + value + ">"+value+"</option>");
+
                     });
                 });
 
