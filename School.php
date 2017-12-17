@@ -16,10 +16,10 @@ class School
         return $school;
     }
 
-    public function school_department($school_name){
-        $school_department= "SELECT school_department FROM Institute_Registration.school where school_name='".$school_name."';";
-        $departmen =  DBconnect::connect()->query($school_department);
-        return $departmen;
-    }
+//    public function school_department($school_name){
+//        $school_department= "SELECT school_department FROM Institute_Registration.school where school_name='".$school_name."';";
+//        $departmen =  DBconnect::connect()->query($school_department);
+//        return $departmen;
+//    }
 
 }

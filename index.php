@@ -142,13 +142,33 @@
 
 </body>
 <script>
-    console.log("ans: "+Form.school.value);
+    console.log("ans: " + Form.school.value);
 
     $(document).ready(function () {
         $("#school").change(function () {
             console.log($("#school").val());
+
+            $.post("SchoolDepartment.php", {
+                    schoolName: $("#school").val()
+                },
+
+                function (data) {
+                    $.each(data, function (index) {
+                        var tribe = data[index];
+                        console.log(tribe);
+                        // $("#title_sel").append
+                        // ("<option value= " + tribe + ">"
+                        //     + tribe + "</option>");
+                    });
+                });
+
+
+            // console.log("数据： " + data);
+
         });
-    })
+
+
+    });
 
 
 </script>
