@@ -33,7 +33,7 @@ CREATE TABLE `Institute_Registration_information` (
   KEY `fk_Institute_Registration_information_candidates_informatio_idx` (`candidates_information_candidates_information_id`),
   CONSTRAINT `fk_Institute_Registration_information_department1` FOREIGN KEY (`department_department_id`) REFERENCES `department` (`department_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_Institute_Registration_information_school1` FOREIGN KEY (`school_school_id`) REFERENCES `school` (`school_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -71,7 +71,6 @@ CREATE TABLE `candidates_information` (
 
 LOCK TABLES `candidates_information` WRITE;
 /*!40000 ALTER TABLE `candidates_information` DISABLE KEYS */;
-INSERT INTO `candidates_information` VALUES ('A125936146','13182271121','','男','1997-01-28','','','');
 /*!40000 ALTER TABLE `candidates_information` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -135,4 +134,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-12-18 23:08:12
+-- Dump completed on 2017-12-18 23:19:20
