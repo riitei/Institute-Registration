@@ -1,4 +1,3 @@
-
 function CheckInput() {
     $error = 0;
 
@@ -11,29 +10,33 @@ function CheckInput() {
     //     window.alert("身份證字號錯誤!");
     //     $error++;
     // }
-    //
     // emailRule = /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z]+$/;
-    // if (emailRule.test(Form.email.value)==false) {
+    //
+    // if (emailRule.test(Form.email.value) == false && Form.email.value != "") {
     //     window.alert("Email 位址資料錯誤!");
     //     $error++
     // }
+    //
+    //
     // reg = /^09[0-9]{8}$/;
-    // if (reg.test(Form.phone.value) == false) {
+    // if (reg.test(Form.phone.value) == false && Form.phone.value != "") {
     //     window.alert('行動電話格式錯誤，範例:0912345678');
-    //     $error++
-    // };
+    //     $error++;
+    // }
+    //
+    //
     // console.log(Form.phone.value);
     //
-    // if(Form.school.value=="school_null"){
+    // if (Form.school.value == "school_null") {
     //     window.alert("請選擇畢業學校");
     //     $error++;
     // }
-    // if(Form.school_department.value=="school_department_null"){
+    // if (Form.school_department.value == "school_department_null") {
     //     window.alert("請選擇畢業科系");
     //     $error++;
     // }
     //
-    // if(Form.ntcu_department.value=="ntcu_department_null"){
+    // if (Form.ntcu_department.value == "ntcu_department_null") {
     //     window.alert("請選擇報考科系");
     //     $error++;
     // }
@@ -89,7 +92,7 @@ $(document).ready(function () {
                     // 添加學校科系
                     // console.log(index+" "+value);
                     $("#school_department").append
-                    ("<option value=" + index + ">"+value+"</option>");
+                    ("<option value=" + index + ">" + value + "</option>");
                 });
             });
 

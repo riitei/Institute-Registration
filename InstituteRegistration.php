@@ -6,6 +6,7 @@
  * Time: 14:41
  */
 include "DBconnect.php";
+
 class InstituteRegistration
 {
 
@@ -29,7 +30,7 @@ class InstituteRegistration
                 move_uploaded_file($_FILES['file']['tmp_name'],
                     dirname(__FILE__) . '/photo/' . $_FILES['file']['name']);
 
-                $path = dirname(__FILE__) . '/photo/' . time().'_'.$_FILES['file']['name'];
+                $path = dirname(__FILE__) . '/photo/' . time() . '_' . $_FILES['file']['name'];
 
 //                echo "path " . $path . '<br>';
             }
@@ -39,7 +40,8 @@ class InstituteRegistration
         $id = "SELECT candidates_information_id FROM Institute_Registration.candidates_information where candidates_information_id= \"1915648575329671\";";
         $searchID = DBconnect::connect()->query($id)->fetch();
         echo $searchID['candidates_information_id'];
-        if($searchID['candidates_information_id'] != $_POST['id']) {
+
+        if ($searchID['candidates_information_id'] != $_POST['id']) {
             //
             $insertCandldates =
                 "INSERT INTO `Institute_Registration`.`candidates_information`
@@ -62,8 +64,9 @@ class InstituteRegistration
                     '" . $_POST['phone'] . "',
                     '" . $_POST['email'] . "');";
             //
-            $insertInstituteRegistration =
-                "INSERT INTO `Institute_Registration`.`Institute_Registration_information`
+//            echo $insertCandldates;
+                $insertInstituteRegistration =
+                    "INSERT INTO `Institute_Registration`.`Institute_Registration_information`
                 (`school_school_id`,
                 `department_department_id`,
                 `candidates_information_candidates_information_id`)
@@ -71,9 +74,13 @@ class InstituteRegistration
                 ('" . $_POST['school_department'] . "',
                 '" . $_POST['ntcu_department'] . "',
                 '" . $_POST['id'] . "');";
+//                echo "<br><br>" . $insertInstituteRegistration."<br><br>";
+
+
+
 
             try {
-                // DBconnect::connect()->exec($insertCandldates);
+                DBconnect::connect()->exec($insertCandldates);
                 DBconnect::connect()->exec($insertInstituteRegistration);
                 return "寫入成功";
             } catch (PDOException $e) {
@@ -82,7 +89,7 @@ class InstituteRegistration
             }
 
 
-        }else{
+        } else {
             return "您已經報名";
         }
 
