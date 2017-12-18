@@ -40,8 +40,6 @@
             <td>
                 <select id="school_department" name="school_department">
                     <option value="school_department_null">畢業科系</option>
-                    <option value="cis">cis</option>
-
                 </select>
             </td>
         </tr>
@@ -65,8 +63,8 @@
                     console.log(JSON.parse(data));
                     $("#school_department").empty();
                     $.each(JSON.parse(data), function (index, value) {
-                        console.log(value);
-                        $("#school_department").append("<option value=" + value + ">"+value+"</option>");
+                        console.log(index+" "+value);
+                        $("#school_department").append("<option value=" + index + ">"+value+"</option>");
 
                         //     // $("#title_sel").append
                         //     // ("<option value= " + tribe + ">"

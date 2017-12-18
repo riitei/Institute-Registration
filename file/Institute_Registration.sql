@@ -24,14 +24,13 @@ DROP TABLE IF EXISTS `Institute_Registration_information`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Institute_Registration_information` (
   `Institute_Registration_information_id` int(11) NOT NULL,
-  `candidates_information_candidates_information_id` int(11) NOT NULL,
   `school_school_id` int(11) NOT NULL,
   `department_department_id` int(11) NOT NULL,
-  PRIMARY KEY (`Institute_Registration_information_id`,`candidates_information_candidates_information_id`,`school_school_id`,`department_department_id`),
-  KEY `fk_Institute_Registration_information_candidates_informatio_idx` (`candidates_information_candidates_information_id`),
+  `candidates_information_candidates_information_id` varchar(45) NOT NULL,
+  PRIMARY KEY (`Institute_Registration_information_id`,`school_school_id`,`department_department_id`,`candidates_information_candidates_information_id`),
   KEY `fk_Institute_Registration_information_school1_idx` (`school_school_id`),
   KEY `fk_Institute_Registration_information_department1_idx` (`department_department_id`),
-  CONSTRAINT `fk_Institute_Registration_information_candidates_information` FOREIGN KEY (`candidates_information_candidates_information_id`) REFERENCES `candidates_information` (`candidates_information_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  KEY `fk_Institute_Registration_information_candidates_informatio_idx` (`candidates_information_candidates_information_id`),
   CONSTRAINT `fk_Institute_Registration_information_department1` FOREIGN KEY (`department_department_id`) REFERENCES `department` (`department_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_Institute_Registration_information_school1` FOREIGN KEY (`school_school_id`) REFERENCES `school` (`school_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -54,12 +53,14 @@ DROP TABLE IF EXISTS `candidates_information`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `candidates_information` (
-  `candidates_information_id` int(11) NOT NULL COMMENT '身分證',
+  `candidates_information_id` varchar(45) NOT NULL COMMENT '身分證',
   `candidates_information_name` varchar(45) NOT NULL,
-  `candidates_information_photo_path` varchar(45) NOT NULL,
+  `candidates_information_photo_path` tinytext,
   `candidates_information_gender` varchar(45) NOT NULL,
   `candidates_information_birthday` varchar(45) NOT NULL,
-  `candidates_information_address` tinytext NOT NULL,
+  `candidates_information_address` tinytext,
+  `candidates_information_phone` varchar(45) DEFAULT NULL,
+  `candidates_information_email` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`candidates_information_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -82,7 +83,7 @@ DROP TABLE IF EXISTS `department`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `department` (
   `department_id` int(11) NOT NULL,
-  `department_name` varchar(45) NOT NULL,
+  `department _name` varchar(45) NOT NULL,
   `department_degree` varchar(45) NOT NULL,
   `department_class` varchar(45) NOT NULL,
   PRIMARY KEY (`department_id`)
@@ -95,7 +96,7 @@ CREATE TABLE `department` (
 
 LOCK TABLES `department` WRITE;
 /*!40000 ALTER TABLE `department` DISABLE KEYS */;
-INSERT INTO `department` VALUES (3572,'教育學系','博士','日'),(3573,'教育學系','碩士','日'),(3575,'教育學系','碩士','職'),(3576,'教師專業(發展)研究所','碩士','日'),(3577,'語文教育學系','博士','日'),(3578,'語文教育學系','碩士','日'),(3580,'語文教育學系','碩士','職'),(3581,'(自然)科學教育(與應用)','碩士','日'),(3583,'(自然)科學教育(與應用)','碩士','職'),(3584,'數學教育學系','碩士','日'),(3586,'數學教育學系','碩士','職'),(3587,'體育學系','碩士','日'),(3589,'體育學系','碩士','職'),(3590,'幼兒教育學系','碩士','日'),(3592,'幼兒教育學系','碩士','職'),(3593,'特殊教育學系','碩士','日'),(3595,'特殊教育學系','碩士','職'),(3596,'高等教育經營管理學位學程','碩士','日'),(3597,'教育資訊與測驗統計研究所','博士','日'),(3598,'教育資訊與測驗統計研究所','碩士','日'),(3599,'教育資訊與測驗統計研究所','碩士','職'),(3600,'(應用)美術學系','碩士','日'),(3602,'(應用)美術學系','碩士','職'),(3603,'音樂學系','碩士','日'),(3607,'文化創意產業設計與營運學系','碩士','日'),(3609,'諮商(與)(應用)心理學系','碩士','日'),(3611,'諮商(與)(應用)心理學系','碩士','職'),(3612,'區域與社會發展學系','碩士','日'),(3614,'區域與社會發展學系','碩士','職'),(3616,'國際(經營)(專業)管理學位學程(含IMBA)','碩士','日'),(3617,'國際(經營)(專業)管理學位學程(含IMBA)','碩士','職'),(3618,'數位內容(科技)(與)(管理)學系','碩士','日'),(3620,'數位內容(科技)(與)(管理)學系','碩士','職'),(3621,'資訊工程學系','碩士','日'),(3623,'(永續)觀光暨遊憩管理系','碩士','日');
+INSERT INTO `department` VALUES (3572,'','博士','日'),(3573,'','碩士','日'),(3575,'','碩士','職'),(3576,'','碩士','日'),(3577,'','博士','日'),(3578,'','碩士','日'),(3580,'','碩士','職'),(3581,'','碩士','日'),(3583,'','碩士','職'),(3584,'','碩士','日'),(3586,'','碩士','職'),(3587,'','碩士','日'),(3589,'','碩士','職'),(3590,'','碩士','日'),(3592,'','碩士','職'),(3593,'','碩士','日'),(3595,'','碩士','職'),(3596,'','碩士','日'),(3597,'','博士','日'),(3598,'','碩士','日'),(3599,'','碩士','職'),(3600,'','碩士','日'),(3602,'','碩士','職'),(3603,'','碩士','日'),(3607,'','碩士','日'),(3609,'','碩士','日'),(3611,'','碩士','職'),(3612,'','碩士','日'),(3614,'','碩士','職'),(3616,'','碩士','日'),(3617,'','碩士','職'),(3618,'','碩士','日'),(3620,'','碩士','職'),(3621,'','碩士','日'),(3623,'','碩士','日');
 /*!40000 ALTER TABLE `department` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -133,4 +134,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-12-17 23:55:31
+-- Dump completed on 2017-12-18 20:46:06

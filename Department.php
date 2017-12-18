@@ -13,8 +13,8 @@ class Department
     public function department_search()
     {
 
-        $department = "SELECT  concat(department_name,'_',department_degree,'(',department_class,')')
-                  as department FROM  Institute_Registration.department;";
+        $department = "SELECT department_id, concat(department_name,'_',department_degree,'(',department_class,')')
+                  as department_name FROM  Institute_Registration.department;";
 
         $department = DBconnect::connect()->query($department);
 

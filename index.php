@@ -18,7 +18,7 @@
 
 <div class="form">
 
-    <form action="index.php" method="post" name="Form" enctype="multipart/form-data">
+    <form action="WriteDB.php" method="post" name="Form" enctype="multipart/form-data">
         <table border="0">
             <tr>
                 <td>
@@ -33,7 +33,9 @@
                     <span>&nbsp;&nbsp;&nbsp;</span> 大頭照：
                 </td>
                 <td>
-                    <input type="file" id="file" name="file">
+                    <input type="file" id="file" name="file"
+                           accept="image/jpeg,image/jpg,image/gif,image/png">
+<!--                    accept="image/jpeg,image/jpg,image/gif,image/png" 限制上傳檔案類型-->
                 </td>
             </tr>
             <tr>
@@ -41,8 +43,8 @@
                     <span style="color: red">＊</span> 性別：
                 </td>
                 <td>
-                    <input type="radio" name="gender" value="male" checked="checked">男
-                    <input type="radio" name="gender" value="female">女
+                    <input type="radio" name="gender" value="男" checked="checked">男
+                    <input type="radio" name="gender" value="女">女
                 </td>
             </tr>
             <tr>
@@ -119,13 +121,13 @@
 
                 </td>
                 <td>
-                    <select name="department">
+                    <select name="ntcu_department">
+                        <option value="ntcu_department_null">請選擇報考科系</option>
                         <?php
                         // 找本校學校碩博班科系
                         $ntcu_department = new Department();
                         foreach ($ntcu_department->department_search() as $value) {
-                            echo $value['department'] . '<br>';
-                            echo "  <option value=" . $value['department'] . ">" . $value['department'] . "</option>";
+                            echo "  <option value=" . $value['department_id'] . ">" . $value['department_name'] . "</option>";
                         }
                         ?>
 
@@ -139,37 +141,48 @@
 
     </form>
 </div>
-
+<?php
+//echo 'test <br>';
+//
+//echo 'name:__' .$_POST['name'].'<br>';
+//echo 'gender:__' .$_POST['gender'].'<br>';
+//echo 'birthday:__' .$_POST['birthday'].'<br>';
+//echo 'id:__' .$_POST['id'].'<br>';
+//echo 'phone:__' .$_POST['phone'].'<br>';
+//echo 'address:__' .$_POST['address'].'<br>';
+//echo 'email:__' .$_POST['email'].'<br>';
+//echo 'school:__' .$_POST['school'].'<br>';
+//echo 'school_department:__' .$_POST['school_department'].'<br>';
+//echo 'ntcu_department:__' .$_POST['ntcu_department'].'<br>';
+//
+//echo '<br>';
+////echo dirname(__FILE__);
+//
+//
+//
+//if ($_FILES["file"]["error"] > 0) {
+//    echo "Error: " . $_FILES["file"]["error"];
+//} else {
+//    echo "檔案名稱: " . $_FILES["file"]["name"] . "<br>";
+//    echo "檔案類型: " . $_FILES["file"]["type"] . "<br>";
+//    echo "檔案大小: " . ($_FILES["file"]["size"] / 1024) . " Kb<br />";
+//    echo "暫存名稱: " . $_FILES["file"]["tmp_name"] . '<br>';
+//
+//
+//    if (file_exists(dirname(__FILE__) . '/photo/' . $_FILES['file']['name'])) {
+//        echo "檔案已經存在，請勿重覆上傳相同檔案";
+//    } else {
+//        echo '搬移檔案';
+//        echo 'in';
+//        move_uploaded_file($_FILES['file']['tmp_name'],
+//            dirname(__FILE__) . '/photo/' . $_FILES['file']['name']);
+//        echo dirname(__FILE__) . '/photo/' . $_FILES['file']['name'].'<br>';
+//        echo 'out';
+//    }
+//}
+//
+//?>
 </body>
-<script>
 
-    $(document).ready(function () {
-        $("#school").change(function () {
-            console.log($("#school").val());
-            // 讀取選擇到學校
-            $.post("SchoolDepartment.php", {
-                    schoolName: $("#school").val()//選到學校名單
-                },
-
-                function (data) {
-                    console.log(JSON.parse(data));
-                    $("#school_department").empty();
-                    $.each(JSON.parse(data), function (index, value) {
-                        console.log(value);
-                        $("#school_department").append("<option value=" + value + ">"+value+"</option>");
-
-                    });
-                });
-
-
-            // console.log("数据： " + data);
-
-        });
-
-
-    });
-
-
-</script>
 </html>
 
