@@ -10,5 +10,5 @@ $write  = new InstituteRegistration();
 $write->insertInstituteRegistration();
 echo '<script>alert("'.$write->insertInstituteRegistration().'");</script>';
 ?>
-<script>history.back();</script>
+<!--<script>history.back();</script>-->
 

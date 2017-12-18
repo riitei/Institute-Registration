@@ -10,7 +10,10 @@ include "DBconnect.php";
 include 'Department.php';
 include 'School.php';
 $school = new School();
-echo time();
+
+$id = "SELECT candidates_information_id FROM Institute_Registration.candidates_information where candidates_information_id= \"1915648575329671\";";
+$searchID = DBconnect::connect()->query($id)->fetch();
+echo $searchID['candidates_information_id'];
 //
 //$ntcu_department = new Department();
 //$ntcu_department->department_search();
