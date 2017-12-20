@@ -81,7 +81,7 @@ $(document).ready(function () {
     $("#school").change(function () {
         console.log($("#school").val());
         // 讀取選擇到學校
-        $.post("SchoolDepartment.php", { // 尋找畢業學校科系
+        $.post("ajax/SchoolDepartment.php", { // 尋找畢業學校科系
                 schoolName: $("#school").val()// 選到畢業學校名稱
             },
 

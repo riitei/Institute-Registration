@@ -5,7 +5,7 @@
  * Date: 2017/12/18
  * Time: 14:41
  */
-include "DBconnect.php";
+//include "DBconnect.php";
 
 class InstituteRegistration
 {
@@ -65,8 +65,8 @@ class InstituteRegistration
                     '" . $_POST['email'] . "');";
             //
 //            echo $insertCandldates;
-                $insertInstituteRegistration =
-                    "INSERT INTO `Institute_Registration`.`Institute_Registration_information`
+            $insertInstituteRegistration =
+                "INSERT INTO `Institute_Registration`.`Institute_Registration_information`
                 (`school_school_id`,
                 `department_department_id`,
                 `candidates_information_candidates_information_id`)
@@ -77,8 +77,6 @@ class InstituteRegistration
 //                echo "<br><br>" . $insertInstituteRegistration."<br><br>";
 
 
-
-
             try {
                 DBconnect::connect()->exec($insertCandldates);
                 DBconnect::connect()->exec($insertInstituteRegistration);
@@ -87,11 +85,14 @@ class InstituteRegistration
                 return "寫入失敗";
 
             }
+            return "您已經報名";
 
 
         } else {
             return "您已經報名";
         }
+        return "您已經報名";
+
 
     }
 }

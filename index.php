@@ -10,7 +10,7 @@
     <?php
     include 'DBconnect.php';
     include 'School.php';
-    include 'Department.php';
+    include 'NTCUDepartment.php';
     ?>
 </head>
 
@@ -110,7 +110,7 @@
                     <span style="color: red">＊</span> 請選擇畢業科系：
                 </td>
                 <td>
-                    <select id="school_department" name="school_department">
+                    <select id="school_department" name="school_department" >
                         <option value="school_department_null">畢業科系</option>
                     </select>
                 </td>
@@ -125,8 +125,8 @@
                         <option value="ntcu_department_null">請選擇報考科系</option>
                         <?php
                         // 找本校學校碩博班科系
-                        $ntcu_department = new Department();
-                        foreach ($ntcu_department->department_search() as $value) {
+                        $ntcu_department = new NTCUDepartment();
+                        foreach ($ntcu_department->NTCU_department_search() as $value) {
                             echo "  <option value=" . $value['department_id'] . ">" . $value['department_name'] . "</option>";
                         }
                         ?>

@@ -2,10 +2,10 @@
 /**
  * Created by PhpStorm.
  * User: riitei
- * Date: 2017/12/15
- * Time: 19:08
+ * Date: 2017/12/20
+ * Time: 16:08
  */
-include "DBconnect.php";
+include $_SERVER['DOCUMENT_ROOT'].'DBconnect.php';
 
 $school_department = "SELECT school_id,school_department 
 FROM Institute_Registration.school where school_name='" . $_POST['schoolName'] . "';";

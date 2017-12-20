@@ -7,8 +7,13 @@
  */
 include_once "InstituteRegistration.php";
 $write  = new InstituteRegistration();
-//$write->insertInstituteRegistration();
+$message = $write->insertInstituteRegistration();
+
 echo '<script>alert("'.$write->insertInstituteRegistration().'");</script>';
 ?>
-<script>history.back();</script>
+<script>
+    //console.log("<?//=$write->insertInstituteRegistration()?>//");
+    //alert（'<?=htmlspecialchars($message,ENT_HTML5)?>'）；
+    // history.back();
+</script>
 

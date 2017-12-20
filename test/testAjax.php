@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>台中教育大學＿碩博班報名系統</title>
-    <script src="api/jquery-3.2.1.min.js"></script>
+    <script src="../api/jquery-3.2.1.min.js"></script>
     <?php
-    include 'DBconnect.php';
-    include 'School.php';
-    include 'Department.php';
+    include $_SERVER['DOCUMENT_ROOT'].'DBconnect.php';
+    include $_SERVER['DOCUMENT_ROOT'].'school.php';
+    include $_SERVER['DOCUMENT_ROOT'].'NTCUDepartment.php';
     ?>
 </head>
 
@@ -55,7 +55,7 @@
             // 讀取選擇到學校
 
 
-            $.post("SchoolDepartment.php", {
+            $.post("../ajax/SchoolDepartment.php", {
                     schoolName: $("#school").val()//選到學校名單
                 },
 
