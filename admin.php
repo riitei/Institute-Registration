@@ -16,10 +16,10 @@
 <div class="form">
     <div>
         新增科系：
-        <input id="addName" name="addName" type="text" placeholder="新增科系">
+        <input id="addName" name="addName" type="text" placeholder="新增科系" size="">
         <select id="addDegree" name="addDegree">
             <option value="碩士">碩士</option>
-            <option value="碩士">博士</option>
+            <option value="博士">博士</option>
         </select>
         <select id="addClass" name="addClass">
             <option value="日">日</option>
@@ -69,19 +69,20 @@
 <script>
     $(document).ready(function () {
         $("#add").click(function () {
-            console.log($('#addName').val());
-            console.log($("#addDegree").val());
-            console.log($("#addClass").val());
+            if($('#addName').val()!=""){
+                $.post("ajax/AddNTCUDepartment.php", {
+                        addName: $("#addName").val(),
+                        addDegree: $("#addDegree").val(),
+                        addClass: $("#addClass").val()
+                    },
+                    function (data) {
+                        alert(data);
+                        console.log(data);
+                    });
 
-            $.post("ajax/AddNTCUDepartment.php", { //
-                    addName: $("#addName").val(),
-                    addDegree: $("#addDegree").val(),
-                    addClass: $("#addClass").val()
-                },
-
-                function (data) {
-                    console.log(data);
-                });
+            }else{
+                alert("請輸入科系名稱");
+            }
         });
     });
 

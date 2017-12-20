@@ -37,7 +37,8 @@ class InstituteRegistration
         }
 // 檢查是否重複id
 
-        $id = "SELECT candidates_information_id FROM Institute_Registration.candidates_information where candidates_information_id= \"1915648575329671\";";
+        $id = "SELECT candidates_information_id FROM Institute_Registration.candidates_information 
+                where candidates_information_id= ''".$_POST['id']."';";
         $searchID = DBconnect::connect()->query($id)->fetch();
         echo $searchID['candidates_information_id'];
 

@@ -25,15 +25,16 @@ DROP TABLE IF EXISTS `Institute_Registration_information`;
 CREATE TABLE `Institute_Registration_information` (
   `Institute_Registration_information_id` int(11) NOT NULL AUTO_INCREMENT,
   `school_school_id` int(11) NOT NULL,
-  `department_department_id` int(11) NOT NULL,
   `candidates_information_candidates_information_id` varchar(45) NOT NULL,
-  PRIMARY KEY (`Institute_Registration_information_id`,`school_school_id`,`department_department_id`,`candidates_information_candidates_information_id`),
+  `ntcu_department_department_id` int(11) NOT NULL,
+  PRIMARY KEY (`Institute_Registration_information_id`,`school_school_id`,`candidates_information_candidates_information_id`,`ntcu_department_department_id`),
   KEY `fk_Institute_Registration_information_school1_idx` (`school_school_id`),
-  KEY `fk_Institute_Registration_information_department1_idx` (`department_department_id`),
   KEY `fk_Institute_Registration_information_candidates_informatio_idx` (`candidates_information_candidates_information_id`),
-  CONSTRAINT `fk_Institute_Registration_information_department1` FOREIGN KEY (`department_department_id`) REFERENCES `ntcu_department` (`department_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  KEY `fk_Institute_Registration_information_ntcu_department1_idx` (`ntcu_department_department_id`),
+  CONSTRAINT `fk_Institute_Registration_information_candidates_information1` FOREIGN KEY (`candidates_information_candidates_information_id`) REFERENCES `candidates_information` (`candidates_information_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Institute_Registration_information_ntcu_department1` FOREIGN KEY (`ntcu_department_department_id`) REFERENCES `ntcu_department` (`department_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_Institute_Registration_information_school1` FOREIGN KEY (`school_school_id`) REFERENCES `school` (`school_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -42,7 +43,6 @@ CREATE TABLE `Institute_Registration_information` (
 
 LOCK TABLES `Institute_Registration_information` WRITE;
 /*!40000 ALTER TABLE `Institute_Registration_information` DISABLE KEYS */;
-INSERT INTO `Institute_Registration_information` VALUES (1,291,3577,'1430791053889596');
 /*!40000 ALTER TABLE `Institute_Registration_information` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -72,7 +72,6 @@ CREATE TABLE `candidates_information` (
 
 LOCK TABLES `candidates_information` WRITE;
 /*!40000 ALTER TABLE `candidates_information` DISABLE KEYS */;
-INSERT INTO `candidates_information` VALUES ('1430791053889596','2590119197@qq.com','','男','1997-01-01','','','');
 /*!40000 ALTER TABLE `candidates_information` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -84,12 +83,12 @@ DROP TABLE IF EXISTS `ntcu_department`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `ntcu_department` (
-  `department_id` int(11) NOT NULL,
+  `department_id` int(11) NOT NULL AUTO_INCREMENT,
   `department_name` varchar(45) NOT NULL,
   `department_degree` varchar(45) NOT NULL,
   `department_class` varchar(45) NOT NULL,
   PRIMARY KEY (`department_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3627 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -98,7 +97,7 @@ CREATE TABLE `ntcu_department` (
 
 LOCK TABLES `ntcu_department` WRITE;
 /*!40000 ALTER TABLE `ntcu_department` DISABLE KEYS */;
-INSERT INTO `ntcu_department` VALUES (3572,'教育學系','博士','日'),(3573,'教育學系','碩士','日'),(3575,'教育學系','碩士','職'),(3576,'教師專業(發展)研究所','碩士','日'),(3577,'語文教育學系','博士','日'),(3578,'語文教育學系','碩士','日'),(3580,'語文教育學系','碩士','職'),(3581,'(自然)科學教育(與應用)','碩士','日'),(3583,'(自然)科學教育(與應用)','碩士','職'),(3584,'數學教育學系','碩士','日'),(3586,'數學教育學系','碩士','職'),(3587,'體育學系','碩士','日'),(3589,'體育學系','碩士','職'),(3590,'幼兒教育學系','碩士','日'),(3592,'幼兒教育學系','碩士','職'),(3593,'特殊教育學系','碩士','日'),(3595,'特殊教育學系','碩士','職'),(3596,'高等教育經營管理學位學程','碩士','日'),(3597,'教育資訊與測驗統計研究所','博士','日'),(3598,'教育資訊與測驗統計研究所','碩士','日'),(3599,'教育資訊與測驗統計研究所','碩士','職'),(3600,'(應用)美術學系','碩士','日'),(3602,'(應用)美術學系','碩士','職'),(3603,'音樂學系','碩士','日'),(3607,'文化創意產業設計與營運學系','碩士','日'),(3609,'諮商(與)(應用)心理學系','碩士','日'),(3611,'諮商(與)(應用)心理學系','碩士','職'),(3612,'區域與社會發展學系','碩士','日'),(3614,'區域與社會發展學系','碩士','職'),(3616,'國際(經營)(專業)管理學位學程(含IMBA)','碩士','日'),(3617,'國際(經營)(專業)管理學位學程(含IMBA)','碩士','職'),(3618,'數位內容(科技)(與)(管理)學系','碩士','日'),(3620,'數位內容(科技)(與)(管理)學系','碩士','職'),(3621,'資訊工程學系','碩士','日'),(3623,'(永續)觀光暨遊憩管理系','碩士','日');
+INSERT INTO `ntcu_department` VALUES (1,'教育學系','博士','日'),(2,'教育學系','碩士','日'),(3,'教育學系','碩士','職'),(4,'教師專業(發展)研究所','碩士','日'),(5,'語文教育學系','博士','日'),(6,'語文教育學系','碩士','日'),(7,'語文教育學系','碩士','職'),(8,'(自然)科學教育(與應用)','碩士','日'),(9,'(自然)科學教育(與應用)','碩士','職'),(10,'數學教育學系','碩士','日'),(11,'數學教育學系','碩士','職'),(12,'體育學系','碩士','日'),(13,'體育學系','碩士','職'),(14,'幼兒教育學系','碩士','日'),(15,'幼兒教育學系','碩士','職'),(16,'特殊教育學系','碩士','日'),(17,'特殊教育學系','碩士','職'),(18,'高等教育經營管理學位學程','碩士','日'),(19,'教育資訊與測驗統計研究所','博士','日'),(20,'教育資訊與測驗統計研究所','碩士','日'),(21,'教育資訊與測驗統計研究所','碩士','職'),(22,'(應用)美術學系','碩士','日'),(23,'(應用)美術學系','碩士','職'),(24,'音樂學系','碩士','日'),(25,'文化創意產業設計與營運學系','碩士','日'),(26,'諮商(與)(應用)心理學系','碩士','日'),(27,'諮商(與)(應用)心理學系','碩士','職'),(28,'區域與社會發展學系','碩士','日'),(29,'區域與社會發展學系','碩士','職'),(30,'國際(經營)(專業)管理學位學程(含IMBA)','碩士','日'),(31,'國際(經營)(專業)管理學位學程(含IMBA)','碩士','職'),(32,'數位內容(科技)(與)(管理)學系','碩士','日'),(33,'數位內容(科技)(與)(管理)學系','碩士','職'),(34,'資訊工程學系','碩士','日'),(35,'(永續)觀光暨遊憩管理系','碩士','日'),(3625,'00','00','00'),(3626,'00','0000','');
 /*!40000 ALTER TABLE `ntcu_department` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -136,4 +135,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-12-19 22:32:14
+-- Dump completed on 2017-12-20 20:17:16
