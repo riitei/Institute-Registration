@@ -29,7 +29,7 @@
     </div>
     <div>
         更新科系：
-        <select id="deleteDepartment" name="deleteDepartment">
+        <select id="updateDepartment" name="updateDepartment">
             <option value="school_null">請選擇更新科系</option>
             <?php
             // 找本校學校碩博班科系
@@ -42,7 +42,7 @@
         <input type="text" placeholder="更新科系">
         <select id="updateDegree" name="updateDegree">
             <option value="碩士">碩士</option>
-            <option value="碩士">博士</option>
+            <option value="博士">博士</option>
         </select>
         <select id="updateClass" name="updateClass">
             <option value="日">日</option>
@@ -61,15 +61,17 @@
             }
             ?>
         </select>
-        <input type="button" value="刪除">
+        <input id="delete" type="button" value="刪除">
     </div>
 </div>
 </body>
 </html>
 <script>
+
+    var del='';
     $(document).ready(function () {
         $("#add").click(function () {
-            if($('#addName').val()!=""){
+            if ($('#addName').val() != "") {
                 $.post("ajax/AddNTCUDepartment.php", {
                         addName: $("#addName").val(),
                         addDegree: $("#addDegree").val(),
@@ -77,12 +79,35 @@
                     },
                     function (data) {
                         alert(data);
-                        console.log(data);
+                        history.go(0);
                     });
 
-            }else{
+            } else {
                 alert("請輸入科系名稱");
             }
+        });
+
+
+        $("#deleteDepartment").change(function () {//選取下拉式選單的
+            console.log("1 " + $("#deleteDepartment").val());
+            del = $("#deleteDepartment").val();
+        });
+
+        $("#delete").click(function () {
+            console.log("2 " + del);
+            if(del !=""){
+                console.log("選單有值 "+del);
+                $.post("ajax/DeleteNTCUDepartment.php", {
+                        deleteID: del
+                    },
+                    function (data) {
+                        alert(data);
+                        history.go(0);
+                    });
+            }else{
+                console.log("選單沒值 "+del);
+            }
+
         });
     });
 
