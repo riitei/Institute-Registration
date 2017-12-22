@@ -9,7 +9,7 @@ include $_SERVER['DOCUMENT_ROOT'].'DBconnect.php';
 
 $delDepartmentID =
     "DELETE FROM `Institute_Registration`.`ntcu_department`
-WHERE department_id = '".$_POST['deletDepartmentID']."';";
+WHERE department_id = '".$_POST['deleteDepartmentID']."';";
 //echo $delDepartmentID;
 try {
     DBconnect::connect()->exec($delDepartmentID);

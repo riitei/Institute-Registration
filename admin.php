@@ -27,8 +27,10 @@
         </select>
         <input id="add" type="button" value="新增">
     </div>
+    <br>
     <div>
-        更新科系：
+        更新科系：<br>
+        選擇更新科系
         <select id="updateDepartment" name="updateDepartment">
             <option value="school_null">請選擇更新科系</option>
             <?php
@@ -38,18 +40,22 @@
                 echo "  <option value=" . $value['department_id'] . ">" . $value['department_name'] . "</option>";
             }
             ?>
-        </select>
-        <input type="text" placeholder="更新科系">
+        </select><br>
+        輸入更新後科系成稱
+        <input id="updateName" type="text" placeholder="更新科系">
         <select id="updateDegree" name="updateDegree">
+            <option value="degree_null">請選擇學位</option>
             <option value="碩士">碩士</option>
             <option value="博士">博士</option>
         </select>
         <select id="updateClass" name="updateClass">
+            <option value="class_null">請選擇班級</option>
             <option value="日">日</option>
             <option value="職">職</option>
         </select>
-        <input type="button" value="更新">
+        <input id="update" type="button" value="更新">
     </div>
+    <br>
     <div>
         刪除科系：
         <select id="deleteDepartment" name="deleteDepartment">
@@ -68,8 +74,13 @@
 </html>
 <script>
 
-    var delDepartmentID='';
+    var deleteDepartmentID = '';
+    var updateDepartmentID = '';
+    var updateDegree = '';
+    var updateClass = '';
+
     $(document).ready(function () {
+        //------------ 新增
         $("#add").click(function () {
             if ($('#addName').val() != "") {
                 $.post("ajax/AddNTCUDepartment.php", {
@@ -87,26 +98,68 @@
             }
         });
 
+        //------------ 更新
+        $("#updateDepartment").change(function () {
+            updateDepartmentID = $("#updateDepartment").val();
+            console.log(updateDepartmentID);
+        });
+        $("#updateDegree").change(function () {
+            updateDegree = $("#updateDegree").val();
+            console.log(updateDegree);
+        });
+        $("#updateClass").change(function () {
+            updateClass = $("#updateClass").val();
+            console.log(updateClass);
+        });
 
+        $("#update").click(function () {
+            if (updateDepartmentID != "" && updateDepartmentID != "school_null"
+                && $("#updateName").val() != ""
+                && updateDegree != "degree_null" && updateClass != "class_null") {
+                // console.log(updateDepartmentID);
+                // console.log($("#updateName").val());
+                // console.log(updateDegree);
+                // console.log(updateClass);
+
+                $.post("ajax/UpdateNTCUDepartment.php", {
+                        updateDepartmentID: updateDepartmentID,
+                        updateDepartmenName: $("#updateName").val(),
+                        updateDepartmenDegree: updateDegree,
+                        updateDepartmenClass: updateClass
+                    },
+                    function (data) {
+                        console.log(data);
+                            history.go(0);
+                    });
+            } else {
+                console.log("請選擇更新科系名稱");
+                //    history.go(0);
+
+            }
+
+        });
+
+
+        //------------ 刪除
         $("#deleteDepartment").change(function () {//選取下拉式選單的
-            delDepartmentID = $("#deleteDepartment").val();
+            deleteDepartmentID = $("#deleteDepartment").val();
         });
 
         $("#delete").click(function () {
-            if(delDepartmentID !="" &&delDepartmentID !="school_null"){
-                // console.log("ok "+delDepartmentID)
+            if (deleteDepartmentID != "" && deleteDepartmentID != "school_null") {
+                // console.log("ok "+deleteDepartmentID)
                 $.post("ajax/DeleteNTCUDepartment.php", {
-                        deletDepartmentID: delDepartmentID
+                        deleteDepartmentID: deleteDepartmentID
                     },
                     function (data) {
-                       alert(data);
-                       history.go(0);
+                        alert(data);
+                        history.go(0);
                     });
-            }else{
-                 alert("請選擇刪除科系");
-               history.go(0);
+            } else {
+                alert("請選擇刪除科系名稱");
+                history.go(0);
 
-                // console.log("error "+delDepartmentID);
+                // console.log("error "+deleteDepartmentID);
             }
 
         });
