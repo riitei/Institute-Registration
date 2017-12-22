@@ -68,7 +68,7 @@
 </html>
 <script>
 
-    var del='';
+    var delDepartmentID='';
     $(document).ready(function () {
         $("#add").click(function () {
             if ($('#addName').val() != "") {
@@ -89,23 +89,24 @@
 
 
         $("#deleteDepartment").change(function () {//選取下拉式選單的
-            console.log("1 " + $("#deleteDepartment").val());
-            del = $("#deleteDepartment").val();
+            delDepartmentID = $("#deleteDepartment").val();
         });
 
         $("#delete").click(function () {
-            console.log("2 " + del);
-            if(del !=""){
-                console.log("選單有值 "+del);
+            if(delDepartmentID !="" &&delDepartmentID !="school_null"){
+                // console.log("ok "+delDepartmentID)
                 $.post("ajax/DeleteNTCUDepartment.php", {
-                        deleteID: del
+                        deletDepartmentID: delDepartmentID
                     },
                     function (data) {
-                        alert(data);
-                        history.go(0);
+                       alert(data);
+                       history.go(0);
                     });
             }else{
-                console.log("選單沒值 "+del);
+                 alert("請選擇刪除科系");
+               history.go(0);
+
+                // console.log("error "+delDepartmentID);
             }
 
         });

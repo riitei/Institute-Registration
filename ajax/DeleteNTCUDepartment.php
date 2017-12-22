@@ -7,3 +7,13 @@
  */
 include $_SERVER['DOCUMENT_ROOT'].'DBconnect.php';
 
+$delDepartmentID =
+    "DELETE FROM `Institute_Registration`.`ntcu_department`
+WHERE department_id = '".$_POST['deletDepartmentID']."';";
+//echo $delDepartmentID;
+try {
+    DBconnect::connect()->exec($delDepartmentID);
+    echo "刪除科系成功";
+}catch (PDOException $exception){
+    echo "刪除科系失敗";
+}

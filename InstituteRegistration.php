@@ -5,7 +5,7 @@
  * Date: 2017/12/18
  * Time: 14:41
  */
-//include "DBconnect.php";
+include "DBconnect.php";
 
 class InstituteRegistration
 {
@@ -38,7 +38,8 @@ class InstituteRegistration
 // 檢查是否重複id
 
         $id = "SELECT candidates_information_id FROM Institute_Registration.candidates_information 
-                where candidates_information_id= ''".$_POST['id']."';";
+                where candidates_information_id= '".$_POST['id']."';";
+//        echo $id;
         $searchID = DBconnect::connect()->query($id)->fetch();
         echo $searchID['candidates_information_id'];
 
