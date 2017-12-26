@@ -35,7 +35,7 @@ for ($i = 0; $i < 5000; $i++) {
     }
 
 
-    $candidates_information_birthday = mt_rand(1970, 1997) . '-' . mt_rand(1, 12) . '-' . mt_rand(1, 28);
+    $candidates_information_birthday = mt_rand(1970, 1996) . '-' . mt_rand(1, 12) . '-' . mt_rand(1, 28);
     echo $candidates_information_id . '<br>';
     echo $candidates_information_name . '<br>';
     echo $candidates_information_gender . '<br>';
@@ -50,7 +50,21 @@ VALUES
 '" . $candidates_information_name . "',
 '" . $candidates_information_gender . "',
 '" . $candidates_information_birthday . "');";
-DBconnect::connect()->exec($insertCI);
+//DBconnect::connect()->exec($insertCI);
+
+
+
+$updateCI = "UPDATE `Institute_Registration`.`candidates_information`
+SET
+`candidates_information_name` =  '".str_pad($i,4,0,STR_PAD_LEFT)."',
+`candidates_information_birthday` = '".$candidates_information_birthday."'
+WHERE `candidates_information_id` ='".$i."';
+
+";
+
+    echo $updateCI;
+DBconnect::connect()->exec($updateCI);
+
 
     echo '<br>';
 
@@ -70,8 +84,8 @@ VALUES
 ('" . $school_school_id . "',
 '" . $candidates_information_candidates_information_id . "',
 '" . $ntcu_department_department_id . "');";
-    DBconnect::connect()->exec($insertIRI);
-    echo '<br><br>';
+//    DBconnect::connect()->exec($insertIRI);
+//    echo '<br><br>';
 
 }
 

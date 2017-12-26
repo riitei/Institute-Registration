@@ -36,19 +36,19 @@ class NTCUDepartment
 
 
 
-    public function insertDepartment($department_name, $department_degree, $department_class)
-    {
-        $insertDepartment =
-            "INSERT INTO `Institute_Registration`.`ntcu_department`
-                        (`department_id`,
-                        `department_name`,
-                        `department_degree`,
-                        `department_class`)
-                    VALUES
-                        ('" . $_POST['id'] . "',
-                        '" . $_POST['department_name'] . "',
-                        '" . $_POST['department_degree'] . "',      
-                        '" . $_POST['department_class'] . "');";
-    }
+//    public function insertDepartment($department_name, $department_degree, $department_class)
+//    {
+//        $insertDepartment =
+//            "INSERT INTO `Institute_Registration`.`ntcu_department`
+//                        (`department_id`,
+//                        `department_name`,
+//                        `department_degree`,
+//                        `department_class`)
+//                    VALUES
+//                        ('" . $_POST['id'] . "',
+//                        '" . $_POST['department_name'] . "',
+//                        '" . $_POST['department_degree'] . "',
+//                        '" . $_POST['department_class'] . "');";
+//    }
 
 }
