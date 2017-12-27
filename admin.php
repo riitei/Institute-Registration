@@ -13,7 +13,20 @@
     ?>
 </head>
 <body>
+<style type="text/css">
+    .department {
+        color: red;
+    }
 
+    .sum {
+        color: blue;
+    }
+
+    .school {
+        background-color: lightgray;
+    }
+
+</style>
 <div class="form">
     <div>
         新增科系：
@@ -77,7 +90,7 @@
 
         $ntcu_department_search = new NTCUDepartment();
         foreach ($ntcu_department_search->NTCU_department_search() as $value) {
-            echo '<span style="color: red">' . $value['department_id'] . '_' . $value['department_name'] . '</span><br>';
+            echo '<span class="department">' . $value['department_id'] . '_' . $value['department_name'] . '</span><br>';
 
             $statistics_data_search = "
 SELECT 
@@ -109,10 +122,6 @@ WHERE
             $age35 = 0;
             $age40 = 0;
             $age45 = 0;
-            $school = array();
-            $schoolnum = 0;
-            $temp_school = 0;
-            $temp = 0;
             //
 
             foreach ($statistics_data as $statistics) {
@@ -138,31 +147,40 @@ WHERE
                 } else {
                     $age45 = $age45 + 1;
                 }
-                // 報考學校
 
-
-                $temp_school = $statistics['school'];
-                if ($temp_school == $statistics['school']) {
-                    $temp = $temp_school;
-                    echo 'id_' . $statistics['school_id'] . '_value_' . $statistics['school'] . '<br>';
-                    $temp_school = 0 ;
-                }
-                if ($temp == $statistics['school']) {
-                    echo $schoolnum = +1 . '人<br>';
-                }else{
-                    $schoolnum = 0;
-                }
 
             }
-            echo '男生共 ' . $male . ' 人<br>';
-            echo '女生共 ' . $female . ' 人<br>';
+            // 統計報考學校畢業學校和科系的人數
+            $statistics_school = "    
+SELECT 
+count(school_id) as count ,school_id,school_name,school_department
+FROM
+    Institute_Registration.Institute_Registration_information
+        INNER JOIN
+    school
+    
+WHERE
+    school_school_id = school_id
+        AND ntcu_department_department_id = '" . $value['department_id'] . "'group by school_id order by school_id;";
+            $school_data = DBconnect::connect()->query($statistics_school);
 
-            echo '  小於21歲共'.$age20.'人<br>';
-            echo '  介於22歲到25歲之間共'.$age25.'人<br>';
-            echo '  介於26歲到30歲之間共'.$age30.'人<br>';
-            echo '  介於31歲到35歲之間共'.$age35.'人<br>';
-            echo '  介於36歲到40歲之間共'.$age40.'人<br>';
-            echo '  大於41歲共'.$age45.'人<br>';
+            echo '男生共 <span class="sum">' . $male . '</span> 人<br>';
+            echo '女生共 <span class="sum">' . $female . '</span> 人<br>';
+            echo '<br>';
+            echo ' &nbsp 小於21歲共<span class="sum">' . $age20 . '</span>人<br>';
+            echo ' &nbsp 介於22歲到25歲之間共<span class="sum">' . $age25 . '</span>人<br>';
+            echo ' &nbsp 介於26歲到30歲之間共<span class="sum">' . $age30 . '</span>人<br>';
+            echo ' &nbsp 介於31歲到35歲之間共<span class="sum">' . $age35 . '</span>人<br>';
+            echo ' &nbsp 介於36歲到40歲之間共<span class="sum">' . $age40 . '</span>人<br>';
+            echo ' &nbsp 大於41歲共<span class="sum">' . $age45 . '</span>人<br>';
+            echo '<br>';
+            foreach ($school_data as $key => $school) {
+                if ($key % 2 == 0) {
+                    echo $key . ' <span class="school">' . $school['school_name'] . ' ' . $school['school_department'] . '</span>>共<span class="sum">' . $school['count'] . '</span>人.<br>';
+                } else {
+                    echo $key . ' ' . $school['school_name'] . ' ' . $school['school_department'] . '共<span class="sum">' . $school['count'] . '</span>人.<br>';
+                }
+            }
 
 
         }// NTCU 依科系
