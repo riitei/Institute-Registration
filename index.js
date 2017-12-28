@@ -86,9 +86,9 @@ $(document).ready(function () {
             },
 
             function (data) {
-            console.log(data);
-            $("#school_department").empty();// 移除下拉式選單html
-               // 尋找到學校科系(json格式)
+                console.log(data);
+                $("#school_department").empty();// 移除下拉式選單html
+                // 尋找到學校科系(json格式)
                 $.each(JSON.parse(data), function (index, value) {
                     // 添加學校科系
                     // console.log(index+" "+value);
@@ -96,11 +96,28 @@ $(document).ready(function () {
                     ("<option value=" + index + ">" + value + "</option>");
                 });
             });
-
-
-        // console.log("数据： " + data);
-
     });
+
+    $("#city_name").change(function () {
+        console.log($("#city_name").val());
+        $.post("ajax/AreaName.php",
+            {
+                cityName: $("#city_name").val()
+            }
+            , function (data) {
+                $("#area_name").empty();// 移除下拉式選單html
+                // 尋找到地區和郵遞區號(json格式)
+
+                $.each(JSON.parse(data), function (index, value) {
+                    $("#area_name").append
+                    ("<option value=" + index + ">" + value + "</option>");
+
+                });
+
+            });
+    });
+
+
 
 
 });

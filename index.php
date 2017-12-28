@@ -35,7 +35,7 @@
                 <td>
                     <input type="file" id="file" name="file"
                            accept="image/jpeg,image/jpg,image/gif,image/png">
-<!--                    accept="image/jpeg,image/jpg,image/gif,image/png" 限制上傳檔案類型-->
+                    <!--                    accept="image/jpeg,image/jpg,image/gif,image/png" 限制上傳檔案類型-->
                 </td>
             </tr>
             <tr>
@@ -76,6 +76,24 @@
                     <span>&nbsp;&nbsp;&nbsp;</span> 地址：
                 </td>
                 <td>
+                    <?php
+                    $city_search = "SELECT CityName FROM Institute_Registration.address group by CityName order by id asc;";
+                    $city_data = DBconnect::connect()->query($city_search);
+                    ?>
+
+                    <select id="city_name" name="city_name">
+                        <option value="city_name_null">請選擇縣市</option>
+                        <?php
+                        foreach ($city_data as $value) {
+                            echo "<option value=" . $value['CityName'] . ">" . $value['CityName'] . "</option>";
+                        }
+                        ?>
+                    </select>
+                    <select id="area_name" name="area_name">
+                        <option value="city_name_null">請選擇區</option>
+                    </select>
+
+
                     <input type="text" name="address" size="60">
                 </td>
             </tr>
@@ -110,7 +128,7 @@
                     <span style="color: red">＊</span> 請選擇畢業科系：
                 </td>
                 <td>
-                    <select id="school_department" name="school_department" >
+                    <select id="school_department" name="school_department">
                         <option value="school_department_null">畢業科系</option>
                     </select>
                 </td>
@@ -141,47 +159,31 @@
 
     </form>
 </div>
-<?php
-//echo 'test <br>';
-//
-//echo 'name:__' .$_POST['name'].'<br>';
-//echo 'gender:__' .$_POST['gender'].'<br>';
-//echo 'birthday:__' .$_POST['birthday'].'<br>';
-//echo 'id:__' .$_POST['id'].'<br>';
-//echo 'phone:__' .$_POST['phone'].'<br>';
-//echo 'address:__' .$_POST['address'].'<br>';
-//echo 'email:__' .$_POST['email'].'<br>';
-//echo 'school:__' .$_POST['school'].'<br>';
-//echo 'school_department:__' .$_POST['school_department'].'<br>';
-//echo 'ntcu_department:__' .$_POST['ntcu_department'].'<br>';
-//
-//echo '<br>';
-////echo dirname(__FILE__);
-//
-//
-//
-//if ($_FILES["file"]["error"] > 0) {
-//    echo "Error: " . $_FILES["file"]["error"];
-//} else {
-//    echo "檔案名稱: " . $_FILES["file"]["name"] . "<br>";
-//    echo "檔案類型: " . $_FILES["file"]["type"] . "<br>";
-//    echo "檔案大小: " . ($_FILES["file"]["size"] / 1024) . " Kb<br />";
-//    echo "暫存名稱: " . $_FILES["file"]["tmp_name"] . '<br>';
-//
-//
-//    if (file_exists(dirname(__FILE__) . '/photo/' . $_FILES['file']['name'])) {
-//        echo "檔案已經存在，請勿重覆上傳相同檔案";
-//    } else {
-//        echo '搬移檔案';
-//        echo 'in';
-//        move_uploaded_file($_FILES['file']['tmp_name'],
-//            dirname(__FILE__) . '/photo/' . $_FILES['file']['name']);
-//        echo dirname(__FILE__) . '/photo/' . $_FILES['file']['name'].'<br>';
-//        echo 'out';
-//    }
-//}
-//
-//?>
+<!--<script>-->
+<!---->
+<!--    $(document).ready(function () {-->
+<!--        // $("#city_name").change(function () {-->
+<!--        //     console.log($("#city_name").val());-->
+<!--        //     $.post("ajax/AreaName.php",-->
+<!--        //         {-->
+<!--        //             cityName: $("#city_name").val()-->
+<!--        //         }-->
+<!--        //         , function (data) {-->
+<!--        //             $("#area_name").empty();// 移除下拉式選單html-->
+<!--        //             // 尋找到地區和郵遞區號(json格式)-->
+<!--        //-->
+<!--        //             $.each(JSON.parse(data), function (index, value) {-->
+<!--        //                 $("#area_name").append-->
+<!--        //                 ("<option value=" + index + ">" + value + "</option>");-->
+<!--        //-->
+<!--        //             });-->
+<!--        //-->
+<!--        //         });-->
+<!--        // });-->
+<!--    });-->
+<!---->
+<!---->
+<!--</script>-->
 </body>
 
 </html>

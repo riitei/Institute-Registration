@@ -76,8 +76,7 @@
                 },
 
                 function (data) {
-                    //console.log(JSON.parse(data));
-                    JSON.parse('{ "name":"John", "age":30, "city":"New York"}');
+                    console.log(JSON.parse(data));
                     // $("#school_department").empty();
                     // $.each(JSON.parse(data), function (index, value) {
                     //     console.log(index+" "+value);
