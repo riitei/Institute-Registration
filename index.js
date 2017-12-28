@@ -86,8 +86,9 @@ $(document).ready(function () {
             },
 
             function (data) {
-                $("#school_department").empty();// 移除下拉式選單html
-                // 尋找到學校科系(json格式)
+            console.log(data);
+            $("#school_department").empty();// 移除下拉式選單html
+               // 尋找到學校科系(json格式)
                 $.each(JSON.parse(data), function (index, value) {
                     // 添加學校科系
                     // console.log(index+" "+value);

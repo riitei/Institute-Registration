@@ -47,6 +47,22 @@
 </div>
 
 </body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <script>
 
     $(document).ready(function () {
@@ -60,16 +76,17 @@
                 },
 
                 function (data) {
-                    console.log(JSON.parse(data));
-                    $("#school_department").empty();
-                    $.each(JSON.parse(data), function (index, value) {
-                        console.log(index+" "+value);
-                        $("#school_department").append("<option value=" + index + ">"+value+"</option>");
-
-                        //     // $("#title_sel").append
-                        //     // ("<option value= " + tribe + ">"
-                        //     //     + tribe + "</option>");
-                    });
+                    //console.log(JSON.parse(data));
+                    JSON.parse('{ "name":"John", "age":30, "city":"New York"}');
+                    // $("#school_department").empty();
+                    // $.each(JSON.parse(data), function (index, value) {
+                    //     console.log(index+" "+value);
+                    //     // $("#school_department").append("<option value=" + index + ">"+value+"</option>");
+                    //
+                    //     //     // $("#title_sel").append
+                    //     //     // ("<option value= " + tribe + ">"
+                    //     //     //     + tribe + "</option>");
+                    // });
                 });
 
 
@@ -82,4 +99,7 @@
 
 
 </script>
+
+
+
 </html>
