@@ -17,15 +17,11 @@ function CheckInput() {
     //     $error++
     // }
     //
-    //
     // reg = /^09[0-9]{8}$/;
     // if (reg.test(Form.phone.value) == false && Form.phone.value != "") {
     //     window.alert('行動電話格式錯誤，範例:0912345678');
     //     $error++;
     // }
-    //
-    //
-    // console.log(Form.phone.value);
     //
     // if (Form.school.value == "school_null") {
     //     window.alert("請選擇畢業學校");
@@ -41,11 +37,12 @@ function CheckInput() {
     //     $error++;
     // }
 
-    // if ($error == 0) {
-    //     if (window.confirm("確定提交表單嗎?")) {
-    //         document.getElementsByName("Form").submit();
-    //     }
-    // }
+
+    if ($error == 0) {
+        if (window.confirm("確定提交表單嗎?")) {
+            document.getElementsByName("Form").submit();
+        }
+    }
 }
 
 function checkLength(dat, len) {
@@ -78,6 +75,7 @@ function checkID(id) {
 
 
 $(document).ready(function () {
+    var zip_code = '';
     $("#school").change(function () {
         console.log($("#school").val());
         // 讀取選擇到學校
@@ -86,7 +84,6 @@ $(document).ready(function () {
             },
 
             function (data) {
-                console.log(data);
                 $("#school_department").empty();// 移除下拉式選單html
                 // 尋找到學校科系(json格式)
                 $.each(JSON.parse(data), function (index, value) {
@@ -105,18 +102,34 @@ $(document).ready(function () {
                 cityName: $("#city_name").val()
             }
             , function (data) {
-                $("#area_name").empty();// 移除下拉式選單html
+                $("#area_name").
+                empty();// 移除下拉式選單html
                 // 尋找到地區和郵遞區號(json格式)
-
+                $("#area_name").
+                append("<option value=''>請選擇區</option>");
                 $.each(JSON.parse(data), function (index, value) {
                     $("#area_name").append
-                    ("<option value=" + index + ">" + value + "</option>");
+                    ("<option value=" + value + ">" + value + "</option>");
 
                 });
 
             });
     });
+    $("#area_name").change(function () {
+        console.log($("#area_name").val());
 
+        $.post("ajax/ZipCode.php",
+            {
+                area_name: $("#area_name").val()
+            }
+            , function (data) {
+                $("#zip_code").empty();
+                $("#zip_code").
+                append("<input type='text' id='zip_code' " +
+                    "name='zip_code' size='4' value='"+data+"'" +
+                    "readonly='readonly'>");
+            });
+    });
 
 
 

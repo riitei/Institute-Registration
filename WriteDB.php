@@ -6,12 +6,13 @@
  * Time: 13:31
  */
 include_once "InstituteRegistration.php";
-$write  = new InstituteRegistration();
-//$message = $write->insertInstituteRegistration();
-
-echo '<script>alert("'.$write->insertInstituteRegistration().'");</script>';
+$write = new InstituteRegistration();
+$message = $write->insertInstituteRegistration();
+if ($message != '') {
+    echo '<script>alert("' . $message . '");</script>';
+}
 ?>
 <script>
-     history.back();
+    // history.back();
 </script>
 

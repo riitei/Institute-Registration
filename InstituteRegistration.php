@@ -38,7 +38,7 @@ class InstituteRegistration
 // 檢查是否重複id
 
         $id = "SELECT candidates_information_id FROM Institute_Registration.candidates_information 
-                where candidates_information_id= '".$_POST['id']."';";
+                where candidates_information_id= '" . $_POST['id'] . "';";
 //        echo $id;
         $searchID = DBconnect::connect()->query($id)->fetch();
         echo $searchID['candidates_information_id'];
@@ -62,11 +62,11 @@ class InstituteRegistration
                     '" . $path . "',
                     '" . $_POST['gender'] . "',
                     '" . $_POST['birthday'] . "',
-                    '" . $_POST['address'] . "',
+                    '" . $_POST['zip_code'] . $_POST['city_name'] . $_POST['area_name'] . $_POST['address'] . "',
                     '" . $_POST['phone'] . "',
                     '" . $_POST['email'] . "');";
             //
-//            echo $insertCandldates;
+//            echo $insertCandldates . '<br>';
             $insertInstituteRegistration =
                 "INSERT INTO `Institute_Registration`.`Institute_Registration_information`
                 (`school_school_id`,
@@ -87,13 +87,13 @@ class InstituteRegistration
                 return "寫入失敗";
 
             }
-            return "您已經報名";
+            return "您已經報名成功";
 
-
-        } else {
-            return "您已經報名";
         }
-        return "您已經報名";
+//        } else {
+//            return "您已經報名";
+//        }
+//        return "您已經報名";
 
 
     }
