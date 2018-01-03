@@ -6,7 +6,7 @@
     <link rel="stylesheet" type="text/css" href="index.css">
     <script src="api/jquery-3.2.1.min.js"></script>
     <script src="admin.js"></script>
-
+    <script src="api/echarts.js"></script>
     <?php
     include 'DBconnect.php';
     include 'NTCUDepartment.php';
@@ -89,7 +89,7 @@
         <?php
 
         $ntcu_department_search = new NTCUDepartment();
-        foreach ($ntcu_department_search->NTCU_department_search() as $value) {
+        foreach ($ntcu_department_search->NTCU_department_search() as $num => $value) {
             echo '<span class="department">' . $value['department_id'] . '_' . $value['department_name'] . '</span><br>';
 
             $statistics_data_search = "
@@ -166,6 +166,43 @@ WHERE
 
             echo '男生共 <span class="sum">' . $male . '</span> 人<br>';
             echo '女生共 <span class="sum">' . $female . '</span> 人<br>';
+            echo "<div id=\"main".$num."\" style=\"width: 600px;height:400px;\"></div>";
+
+            echo "<script>
+    var myChart = echarts.init(document.getElementById('main" . $num . "'));
+    var option = {
+        title : {
+            text: '報考男女人數',
+            x:'center'
+        },
+        tooltip : {
+            trigger: 'item',
+            formatter: \"{a} <br/>{b} : {c} 人 ({d}%)\"
+        },
+        legend: {
+            orient: 'vertical',
+            left: 'left',
+            data: ['男','女']
+        },
+
+        series : [
+            {
+                name: '報考男女人數',
+                type: 'pie',
+                radius : '55%',
+                center: ['50%', '50%'],
+                data:[
+                    {value:".$male.", name:'男'},
+                    {value:".$female.", name:'女'},
+                ]
+            }
+        ]
+    };
+    myChart.setOption(option);
+</script>
+";
+
+
             echo '<br>';
             echo ' &nbsp 小於21歲共<span class="sum">' . $age20 . '</span>人<br>';
             echo ' &nbsp 介於22歲到25歲之間共<span class="sum">' . $age25 . '</span>人<br>';
