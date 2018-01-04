@@ -166,7 +166,7 @@ WHERE
 
             echo '男生共 <span class="sum">' . $male . '</span> 人<br>';
             echo '女生共 <span class="sum">' . $female . '</span> 人<br>';
-            echo "<div id=\"main".$num."\" style=\"width: 600px;height:400px;\"></div>";
+            echo "<div id=\"main" . $num . "\" style=\"width: 600px;height:400px;\"></div>";
 
             echo "<script>
     var myChart = echarts.init(document.getElementById('main" . $num . "'));
@@ -192,8 +192,8 @@ WHERE
                 radius : '55%',
                 center: ['50%', '50%'],
                 data:[
-                    {value:".$male.", name:'男'},
-                    {value:".$female.", name:'女'},
+                    {value:" . $male . ", name:'男'},
+                    {value:" . $female . ", name:'女'},
                 ]
             }
         ]
@@ -204,12 +204,58 @@ WHERE
 
 
             echo '<br>';
-            echo ' &nbsp 小於21歲共<span class="sum">' . $age20 . '</span>人<br>';
-            echo ' &nbsp 介於22歲到25歲之間共<span class="sum">' . $age25 . '</span>人<br>';
-            echo ' &nbsp 介於26歲到30歲之間共<span class="sum">' . $age30 . '</span>人<br>';
-            echo ' &nbsp 介於31歲到35歲之間共<span class="sum">' . $age35 . '</span>人<br>';
-            echo ' &nbsp 介於36歲到40歲之間共<span class="sum">' . $age40 . '</span>人<br>';
-            echo ' &nbsp 大於41歲共<span class="sum">' . $age45 . '</span>人<br>';
+            echo "<div id=\"age" . $num . "\" style=\"width: 600px;height:400px;\"></div>";
+            echo "<script>
+    var myChart = echarts.init(document.getElementById('age" . $num . "'));
+    var age_option = {
+        tooltip: {
+            trigger: 'item',
+            formatter: \"{a} <br/>{b}: 共{c}人 ({d}%)\"
+        },
+        legend: {
+            orient: 'vertical',
+            x: 'left',
+            data:['小於21歲','介於22歲到25歲之間','介於26歲到30歲之間','介於31歲到35歲之間','介於36歲到40歲之間','大於41歲']
+        },
+        series: [
+            {
+                name:'報考年紀區間',
+                type:'pie',
+                radius: ['50%', '70%'],
+                avoidLabelOverlap: false,
+                label: {
+                    normal: {
+                        show: false,
+                        position: 'center'
+                    },
+                    emphasis: {
+                        show: true,
+                        textStyle: {
+                            fontSize: '30',
+                            fontWeight: 'bold'
+                        }
+                    }
+                },
+                labelLine: {
+                    normal: {
+                        show: false
+                    }
+                },
+                data:[
+                    {value:" . $age20 . ", name:'小於21歲'},
+                    {value:" . $age25 . ", name:'介於22歲到25歲之間'},
+                    {value:" . $age30 . ", name:'介於26歲到30歲之間'},
+                    {value:" . $age35 . ", name:'介於31歲到35歲之間'},
+                    {value:" . $age40 . ", name:'介於36歲到40歲之間'},
+                    {value:" . $age45 . ",name:'大於41歲共'}
+                ]
+            }
+        ]
+    };
+    myChart.setOption(age_option);
+</script>
+";
+
             echo '<br>';
             foreach ($school_data as $key => $school) {
                 if ($key % 2 == 0) {

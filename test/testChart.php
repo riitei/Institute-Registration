@@ -13,47 +13,60 @@
 <body>
 
 <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
-<div id="main" style="width: 600px;height:400px;"></div>
+<div id="age" style="width: 600px;height:400px;"></div>
 <?php
 $m=100;
 $f=50;
 
 ?>
-<script type="text/javascript">
-    // 基于准备好的dom，初始化echarts实例
-    var myChart = echarts.init(document.getElementById('main'));
-
-    // 指定图表的配置项和数据
-    var option = {
-        title : {
-            text: '報考男女人數',
-            x:'center'
-        },
-        tooltip : {
+<script>
+    var myChart = echarts.init(document.getElementById('age'));
+    var age_option = {
+        tooltip: {
             trigger: 'item',
-            formatter: "{a} <br/>{b} : {c} 人 ({d}%)"
+            formatter: "{a} <br/>{b}: 共{c}人 ({d}%)"
         },
         legend: {
             orient: 'vertical',
-            left: 'left',
-            data: ['男','女']
+            x: 'left',
+            data:['小於21歲','介於22歲到25歲之間','介於26歲到30歲之間','介於31歲到35歲之間','介於36歲到40歲之間','大於41歲']
         },
-
-        series : [
+        series: [
             {
-                name: '報考男女人數',
-                type: 'pie',
-                radius : '55%',
-                center: ['50%', '50%'],
+                name:'報考年紀區間',
+                type:'pie',
+                radius: ['50%', '70%'],
+                avoidLabelOverlap: false,
+                label: {
+                    normal: {
+                        show: false,
+                        position: 'center'
+                    },
+                    emphasis: {
+                        show: true,
+                        textStyle: {
+                            fontSize: '30',
+                            fontWeight: 'bold'
+                        }
+                    }
+                },
+                labelLine: {
+                    normal: {
+                        show: false
+                    }
+                },
                 data:[
-                    {value:<?=$m?>, name:'男'},
-                    {value:<?=$f?>, name:'女'},
+                    {value:335, name:'小於21歲'},
+                    {value:310, name:'介於22歲到25歲之間'},
+                    {value:234, name:'介於26歲到30歲之間'},
+                    {value:135, name:'介於31歲到35歲之間'},
+                    {value:1548, name:'介於36歲到40歲之間'},
+                    {value:212,name:'大於41歲共'}
                 ]
             }
         ]
     };
-    // 使用刚指定的配置项和数据显示图表。
-    myChart.setOption(option);
+    myChart.setOption(age_option);
 </script>
 
 
