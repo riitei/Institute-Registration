@@ -6,7 +6,7 @@
     <link rel="stylesheet" type="text/css" href="index.css">
     <script src="api/jquery-3.2.1.min.js"></script>
     <script src="admin.js"></script>
-    <script src="api/echarts.js"></script>
+
     <?php
     include 'DBconnect.php';
     include 'NTCUDepartment.php';
@@ -85,11 +85,62 @@
     </div>
     <br><br>
     <div>
+        <select id="department" name="department">
+            <option value="department_null">請選擇統計報考科系</option>
+            <?php
+            // 找本校學校碩博班科系
+            foreach ($ntcu_department->NTCU_department_search() as $value) {
+                echo "  <option value=" . $value['department_id'] . ">" . $value['department_name'] . "</option>";
+            }
+            ?>
+        </select>
+    </div>
+
+
+    <script>
+
+        $(document).ready(function () {
+
+            $("#department").change(function () {
+                var gender_male='';
+                $.post("ajax/Department.php", {
+                        department_id: $("#department").val()
+                    },
+
+                    function (data) {
+                    console.log(2);
+                       console.log(JSON.parse(data));
+                        var statistics_data =JSON.parse(data);
+                        gender_male = statistics_data['gender']['male'];
+                        // console.log(statistics_data['gender']['female']);
+                        // console.log(statistics_data['age_range']['age20']);
+                        // console.log(statistics_data['age_range']['age25']);
+                        // console.log(statistics_data['age_range']['age30']);
+                        // console.log(statistics_data['age_range']['age35']);
+                        // console.log(statistics_data['age_range']['age40']);
+                        // console.log(statistics_data['age_range']['age45']);
+                        // $.each(temp['gender'], function (index,value) {
+                        //     console.log(index+" "+value);
+                        // });
+                            console.log(gender_male);
+
+                    }
+                );
+                console.log(1);
+            });
+
+        });
+
+
+    </script>
+
+
+    <div>
 
         <?php
 
         $ntcu_department_search = new NTCUDepartment();
-        foreach ($ntcu_department_search->NTCU_department_search() as $num => $value) {
+        foreach ($ntcu_department_search->NTCU_department_search() as $value) {
             echo '<span class="department">' . $value['department_id'] . '_' . $value['department_name'] . '</span><br>';
 
             $statistics_data_search = "
@@ -164,161 +215,33 @@ WHERE
         AND ntcu_department_department_id = '" . $value['department_id'] . "'group by school_id order by school_id;";
             $school_data = DBconnect::connect()->query($statistics_school);
 
-
-            echo "<div id=\"main" . $num . "\" style=\"width: 600px;height:400px;\"></div>";
-
-            echo "<script>
-    var myChart = echarts.init(document.getElementById('main" . $num . "'));
-    var option = {
-        title : {
-            text: '報考男女人數',
-            x:'center'
-        },
-        tooltip : {
-            trigger: 'item',
-            formatter: \"{a} <br/>{b} : {c} 人 ({d}%)\"
-        },
-        legend: {
-            orient: 'vertical',
-            left: 'left',
-            data: ['男','女']
-        },
-
-        series : [
-            {
-                name: '報考男女人數',
-                type: 'pie',
-                radius : '55%',
-                center: ['50%', '50%'],
-                data:[
-                    {value:" . $male . ", name:'男'},
-                    {value:" . $female . ", name:'女'},
-                ]
-            }
-        ]
-    };
-    myChart.setOption(option);
-</script>";
-
-
+            echo '男生共 <span class="sum">' . $male . '</span> 人<br>';
+            echo '女生共 <span class="sum">' . $female . '</span> 人<br>';
             echo '<br>';
-            echo "<div id=\"age" . $num . "\" style=\"width: 600px;height:400px;\"></div>";
-            echo "<script>
-    var myChart = echarts.init(document.getElementById('age" . $num . "'));
-    var age_option = {
-        tooltip: {
-            trigger: 'item',
-            formatter: \"{a} <br/>{b}: 共{c}人 ({d}%)\"
-        },
-        legend: {
-            orient: 'vertical',
-            x: 'left',
-            data:['小於21歲','介於22歲到25歲之間','介於26歲到30歲之間','介於31歲到35歲之間','介於36歲到40歲之間','大於41歲']
-        },
-        series: [
-            {
-                name:'報考年紀區間',
-                type:'pie',
-                radius: ['50%', '70%'],
-                avoidLabelOverlap: false,
-                label: {
-                    normal: {
-                        show: false,
-                        position: 'center'
-                    },
-                    emphasis: {
-                        show: true,
-                        textStyle: {
-                            fontSize: '30',
-                            fontWeight: 'bold'
-                        }
-                    }
-                },
-                labelLine: {
-                    normal: {
-                        show: false
-                    }
-                },
-                data:[
-                    {value:" . $age20 . ", name:'小於21歲'},
-                    {value:" . $age25 . ", name:'介於22歲到25歲之間'},
-                    {value:" . $age30 . ", name:'介於26歲到30歲之間'},
-                    {value:" . $age35 . ", name:'介於31歲到35歲之間'},
-                    {value:" . $age40 . ", name:'介於36歲到40歲之間'},
-                    {value:" . $age45 . ",name:'大於41歲共'}
-                ]
-            }
-        ]
-    };
-    myChart.setOption(age_option);
-</script>";
-
+            echo ' &nbsp 小於21歲共<span class="sum">' . $age20 . '</span>人<br>';
+            echo ' &nbsp 介於22歲到25歲之間共<span class="sum">' . $age25 . '</span>人<br>';
+            echo ' &nbsp 介於26歲到30歲之間共<span class="sum">' . $age30 . '</span>人<br>';
+            echo ' &nbsp 介於31歲到35歲之間共<span class="sum">' . $age35 . '</span>人<br>';
+            echo ' &nbsp 介於36歲到40歲之間共<span class="sum">' . $age40 . '</span>人<br>';
+            echo ' &nbsp 大於41歲共<span class="sum">' . $age45 . '</span>人<br>';
             echo '<br>';
-
-
-            // 統計報考學校
-            $school_name = array();
-            $school_count = array();
-
             foreach ($school_data as $key => $school) {
-                $school_name[$key] = $school['school_name'] . ' ' . $school['school_department'];
-                $school_count[$key] = $school['count'];
-//                if ($key % 2 == 0) {
-//                    echo $key . ' <span class="school">' . $school['school_name'] . ' ' . $school['school_department'] . '</span>>共<span class="sum">' . $school['count'] . '</span>人.<br>';
-//                } else {
-//                    echo $key . ' ' . $school['school_name'] . ' ' . $school['school_department'] . '共<span class="sum">' . $school['count'] . '</span>人.<br>';
-//                }
-            }
-            $school_name_json = json_encode($school_name, true);
-            $school_count_json = json_encode($school_count, true);
-            echo "<div id=\"school" . $num . "\" style=\"width: 600px;height:400px;\"></div>";
-            echo "<script>
-    var myChart = echarts.init(document.getElementById('school" . $num . "'));
-    var school_option = {
-        color: ['#3398DB'],
-        tooltip : {
-            trigger: 'axis',
-            axisPointer : {
-                type : 'shadow'
-            }
-        },
-        grid: {
-            left: '1%',
-            right: '2%',
-            bottom: '1%',
-            containLabel: true
-        },
-        yAxis : [
-            {
-                type : 'category',
-                data:" . $school_name_json . ",
-                axisTick: {
-                    alignWithLabel: true
+                if ($key % 2 == 0) {
+                    echo $key . ' <span class="school">' . $school['school_name'] . ' ' . $school['school_department'] . '</span>>共<span class="sum">' . $school['count'] . '</span>人.<br>';
+                } else {
+                    echo $key . ' ' . $school['school_name'] . ' ' . $school['school_department'] . '共<span class="sum">' . $school['count'] . '</span>人.<br>';
                 }
             }
-        ],
-        xAxis : [
-            {
-                type : 'value'
-            }
-        ],
-        series : [
-            {
-                name:'報考人數',
-                type:'bar',
-                barWidth: '20%',
-                data:" . $school_count_json . "
-            }
-        ]
-    };
-    myChart.setOption(school_option);
-</script>";
+
 
         }// NTCU 依科系
 
 
         ?>
 
+        <table>
+
+        </table>
 
     </div>
 </div>
