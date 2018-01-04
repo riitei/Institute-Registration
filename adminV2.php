@@ -164,8 +164,7 @@ WHERE
         AND ntcu_department_department_id = '" . $value['department_id'] . "'group by school_id order by school_id;";
             $school_data = DBconnect::connect()->query($statistics_school);
 
-            echo '男生共 <span class="sum">' . $male . '</span> 人<br>';
-            echo '女生共 <span class="sum">' . $female . '</span> 人<br>';
+
             echo "<div id=\"main" . $num . "\" style=\"width: 600px;height:400px;\"></div>";
 
             echo "<script>
@@ -199,8 +198,7 @@ WHERE
         ]
     };
     myChart.setOption(option);
-</script>
-";
+</script>";
 
 
             echo '<br>';
@@ -253,27 +251,74 @@ WHERE
         ]
     };
     myChart.setOption(age_option);
-</script>
-";
+</script>";
 
             echo '<br>';
+
+
+            // 統計報考學校
+            $school_name = array();
+            $school_count = array();
+
             foreach ($school_data as $key => $school) {
-                if ($key % 2 == 0) {
-                    echo $key . ' <span class="school">' . $school['school_name'] . ' ' . $school['school_department'] . '</span>>共<span class="sum">' . $school['count'] . '</span>人.<br>';
-                } else {
-                    echo $key . ' ' . $school['school_name'] . ' ' . $school['school_department'] . '共<span class="sum">' . $school['count'] . '</span>人.<br>';
+                $school_name[$key] = $school['school_name'] . ' ' . $school['school_department'];
+                $school_count[$key] = $school['count'];
+//                if ($key % 2 == 0) {
+//                    echo $key . ' <span class="school">' . $school['school_name'] . ' ' . $school['school_department'] . '</span>>共<span class="sum">' . $school['count'] . '</span>人.<br>';
+//                } else {
+//                    echo $key . ' ' . $school['school_name'] . ' ' . $school['school_department'] . '共<span class="sum">' . $school['count'] . '</span>人.<br>';
+//                }
+            }
+            $school_name_json = json_encode($school_name, true);
+            $school_count_json = json_encode($school_count, true);
+            echo "<div id=\"school" . $num . "\" style=\"width: 600px;height:400px;\"></div>";
+            echo "<script>
+    var myChart = echarts.init(document.getElementById('school" . $num . "'));
+    var school_option = {
+        color: ['#3398DB'],
+        tooltip : {
+            trigger: 'axis',
+            axisPointer : {
+                type : 'shadow'
+            }
+        },
+        grid: {
+            left: '1%',
+            right: '2%',
+            bottom: '1%',
+            containLabel: true
+        },
+        xAxis : [
+            {
+                type : 'category',
+                data:" . $school_name_json . ",
+                axisTick: {
+                    alignWithLabel: true
                 }
             }
-
+        ],
+        yAxis : [
+            {
+                type : 'value'
+            }
+        ],
+        series : [
+            {
+                name:'報考人數',
+                type:'bar',
+                barWidth: '20%',
+                data:" . $school_count_json . "
+            }
+        ]
+    };
+    myChart.setOption(school_option);
+</script>";
 
         }// NTCU 依科系
 
 
         ?>
 
-        <table>
-
-        </table>
 
     </div>
 </div>
