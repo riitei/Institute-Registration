@@ -1,41 +1,41 @@
 function CheckInput() {
     $error = 0;
 
-    // if (!checkLength(document.Form.name.value, 2)) {
-    //     window.alert("姓名資料錯誤!");
-    //     $error++;
-    // }
-    //
-    // if (!checkID(document.Form.id.value)) {
-    //     window.alert("身份證字號錯誤!");
-    //     $error++;
-    // }
-    // emailRule = /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z]+$/;
-    //
-    // if (emailRule.test(Form.email.value) == false && Form.email.value != "") {
-    //     window.alert("Email 位址資料錯誤!");
-    //     $error++
-    // }
-    //
-    // reg = /^09[0-9]{8}$/;
-    // if (reg.test(Form.phone.value) == false && Form.phone.value != "") {
-    //     window.alert('行動電話格式錯誤，範例:0912345678');
-    //     $error++;
-    // }
-    //
-    // if (Form.school.value == "school_null") {
-    //     window.alert("請選擇畢業學校");
-    //     $error++;
-    // }
-    // if (Form.school_department.value == "school_department_null") {
-    //     window.alert("請選擇畢業科系");
-    //     $error++;
-    // }
-    //
-    // if (Form.ntcu_department.value == "ntcu_department_null") {
-    //     window.alert("請選擇報考科系");
-    //     $error++;
-    // }
+    if (!checkLength(document.Form.name.value, 2)) {
+        window.alert("姓名資料錯誤!");
+        $error++;
+    }
+
+    if (!checkID(document.Form.id.value)) {
+        window.alert("身份證字號錯誤!");
+        $error++;
+    }
+    emailRule = /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z]+$/;
+
+    if (emailRule.test(Form.email.value) == false && Form.email.value != "") {
+        window.alert("Email 位址資料錯誤!");
+        $error++
+    }
+
+    reg = /^09[0-9]{8}$/;
+    if (reg.test(Form.phone.value) == false && Form.phone.value != "") {
+        window.alert('行動電話格式錯誤，範例:0912345678');
+        $error++;
+    }
+
+    if (Form.school.value == "school_null") {
+        window.alert("請選擇畢業學校");
+        $error++;
+    }
+    if (Form.school_department.value == "school_department_null") {
+        window.alert("請選擇畢業科系");
+        $error++;
+    }
+
+    if (Form.ntcu_department.value == "ntcu_department_null") {
+        window.alert("請選擇報考科系");
+        $error++;
+    }
 
 
     if ($error == 0) {
