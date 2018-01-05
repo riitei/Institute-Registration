@@ -87,7 +87,7 @@
     <br><br>
     <div>
         <select id="department" name="department">
-            <option value="department_null">請選擇統計報考科系</option>
+            <option value="department_null">請選擇統計報考本校科系</option>
             <?php
             // 找本校學校碩博班科系
             foreach ($ntcu_department->NTCU_department_search() as $value) {
