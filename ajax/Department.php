@@ -39,6 +39,9 @@ $age45 = 0;
 $gender = array();
 $data = array();
 $age_range = array();
+$school_department = array();
+$school_count = array();
+//
 foreach ($statistics_data as $statistics) {
 
     // 統計報考科系男女人數
@@ -73,39 +76,27 @@ FROM
 
 WHERE
     school_school_id = school_id
-        AND ntcu_department_department_id = '" .  $_POST['department_id']  . "'group by school_id order by school_id;";
+        AND ntcu_department_department_id = '" . $_POST['department_id'] . "'group by school_id order by school_id;";
     $school_data = DBconnect::connect()->query($statistics_school);
 
 
-//    echo '男生共 <span class="sum">' . $male . '</span> 人<br>';
-//    echo '女生共 <span class="sum">' . $female . '</span> 人<br>';
-//
-//    echo '<br>';
-//    echo ' &nbsp 小於21歲共<span class="sum">' . $age20 . '</span>人<br>';
-//    echo ' &nbsp 介於22歲到25歲之間共<span class="sum">' . $age25 . '</span>人<br>';
-//    echo ' &nbsp 介於26歲到30歲之間共<span class="sum">' . $age30 . '</span>人<br>';
-//    echo ' &nbsp 介於31歲到35歲之間共<span class="sum">' . $age35 . '</span>人<br>';
-//    echo ' &nbsp 介於36歲到40歲之間共<span class="sum">' . $age40 . '</span>人<br>';
-//    echo ' &nbsp 大於41歲共<span class="sum">' . $age45 . '</span>人<br>';
-//    echo '<br>';
-//    foreach ($school_data as $key => $school) {
-//        if ($key % 2 == 0) {
-//            echo $key . ' <span class="school">' . $school['school_name'] . ' ' . $school['school_department'] . '</span>>共<span class="sum">' . $school['count'] . '</span>人.<br>';
-//        } else {
-//            echo $key . ' ' . $school['school_name'] . ' ' . $school['school_department'] . '共<span class="sum">' . $school['count'] . '</span>人.<br>';
-//        }
-//    }
+    foreach ($school_data as $key => $school) {
+        $school_department[$key] = $school['school_name'] . ' ' . $school['school_department'];
+        $school_count[$key] = $school['count'];
+    }
 
 }
 $gender['male'] = $male;
 $gender['female'] = $female;
-$age_range['age20']=$age20;
-$age_range['age25']=$age25;
-$age_range['age30']=$age30;
-$age_range['age35']=$age35;
-$age_range['age40']=$age40;
-$age_range['age45']=$age45;
+$age_range['age20'] = $age20;
+$age_range['age25'] = $age25;
+$age_range['age30'] = $age30;
+$age_range['age35'] = $age35;
+$age_range['age40'] = $age40;
+$age_range['age45'] = $age45;
 
 $data['gender'] = $gender;
-$data['age_range']=$age_range;
-echo json_encode($data,true);
+$data['age_range'] = $age_range;
+$data['school_department'] = $school_department;
+$data['school_count'] = $school_count;
+echo json_encode($data, true);

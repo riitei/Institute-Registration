@@ -6,6 +6,7 @@
     <link rel="stylesheet" type="text/css" href="index.css">
     <script src="api/jquery-3.2.1.min.js"></script>
     <script src="admin.js"></script>
+    <script src="api/echarts.js"></script>
 
     <?php
     include 'DBconnect.php';
@@ -94,156 +95,184 @@
             }
             ?>
         </select>
+        <input id="department_search" type="button" value="查詢">
     </div>
-
-
+    <div id="gender" style="width: 600px;height:400px;"></div>
+    <div id="age" style="width: 600px;height:400px;"></div>
+    <div id="school" style="width: 600px;height:2048px;"></div>
     <script>
 
         $(document).ready(function () {
 
-            $("#department").change(function () {
-                var gender_male='';
+            $("#department_search").click(function () {
+
                 $.post("ajax/Department.php", {
                         department_id: $("#department").val()
                     },
 
                     function (data) {
-                    console.log(2);
-                       console.log(JSON.parse(data));
-                        var statistics_data =JSON.parse(data);
-                        gender_male = statistics_data['gender']['male'];
-                        // console.log(statistics_data['gender']['female']);
-                        // console.log(statistics_data['age_range']['age20']);
-                        // console.log(statistics_data['age_range']['age25']);
-                        // console.log(statistics_data['age_range']['age30']);
-                        // console.log(statistics_data['age_range']['age35']);
-                        // console.log(statistics_data['age_range']['age40']);
-                        // console.log(statistics_data['age_range']['age45']);
-                        // $.each(temp['gender'], function (index,value) {
-                        //     console.log(index+" "+value);
-                        // });
-                            console.log(gender_male);
+                        console.log(JSON.parse(data));
+                        var statistics_data = JSON.parse(data);
+                        // 報考男女生人數
+                        var gender_male = statistics_data['gender']['male'];
+                        var gender_female = statistics_data['gender']['female'];
+                        // $("#gender").empty();
+                        var genderChart = echarts.init(document.getElementById('gender'));
+                        var genderOption = {
+                            title: {
+                                text: '報考男女人數',
+                                x: 'center'
+                            },
+                            tooltip: {
+                                trigger: 'item',
+                                formatter: "{a} <br/>{b} : {c} 人 ({d}%)"
+                            },
+                            color: ['#0000ff', '#ff0000'],
+                            legend: {
+                                orient: 'vertical',
+                                left: 'left',
+                                data: ["男 " + gender_male + "人", "女 " + gender_female + "人"]
+                            },
+
+                            series: [
+                                {
+                                    name: '報考男女人數',
+                                    type: 'pie',
+                                    radius: '55%',
+                                    center: ['50%', '50%'],
+                                    data: [
+                                        {value: gender_male, name: "男 " + gender_male + "人"},
+                                        {value: gender_female, name: '女 ' + gender_female + "人"},
+                                    ]
+                                }
+                            ]
+                        };
+                        genderChart.setOption(genderOption);
+                        // 報考年紀區間
+                        var age_range_age20 = statistics_data['age_range']['age20'];
+                        var age_range_age25 = statistics_data['age_range']['age25'];
+                        var age_range_age30 = statistics_data['age_range']['age30'];
+                        var age_range_age35 = statistics_data['age_range']['age35'];
+                        var age_range_age40 = statistics_data['age_range']['age40'];
+                        var age_range_age45 = statistics_data['age_range']['age45'];
+                        var ageChart = echarts.init(document.getElementById('age'));
+                        var age_option = {
+                            tooltip: {
+                                trigger: 'item',
+                                formatter: "{a} <br/>{b}: 共{c}人 ({d}%)"
+                            },
+                            legend: {
+                                orient: 'vertical',
+                                x: 'left',
+                                data: ['小於21歲' + age_range_age20 + '人',
+                                    '介於22歲到25歲之間' + age_range_age25 + '人',
+                                    '介於26歲到30歲之間' + age_range_age30 + '人',
+                                    '介於31歲到35歲之間' + age_range_age35 + '人',
+                                    '介於36歲到40歲之間' + age_range_age40 + '人',
+                                    '大於41歲' + age_range_age45 + '人']
+                            },
+                            series: [
+                                {
+                                    name: '報考年紀區間',
+                                    type: 'pie',
+                                    radius: ['50%', '70%'],
+                                    avoidLabelOverlap: false,
+                                    label: {
+                                        normal: {
+                                            show: false,
+                                            position: 'center'
+                                        },
+                                        emphasis: {
+                                            show: true,
+                                            textStyle: {
+                                                fontSize: '30',
+                                                fontWeight: 'bold'
+                                            }
+                                        }
+                                    },
+                                    labelLine: {
+                                        normal: {
+                                            show: false
+                                        }
+                                    },
+                                    data: [
+                                        {value: age_range_age20, name: '小於21歲' + age_range_age20 + '人'},
+                                        {value: age_range_age25, name: '介於22歲到25歲之間' + age_range_age25 + '人'},
+                                        {value: age_range_age30, name: '介於26歲到30歲之間' + age_range_age30 + '人'},
+                                        {value: age_range_age35, name: '介於31歲到35歲之間' + age_range_age35 + '人'},
+                                        {value: age_range_age40, name: '介於36歲到40歲之間' + age_range_age40 + '人'},
+                                        {value: age_range_age45, name: '大於41歲共' + age_range_age45 + '人'}
+                                    ]
+                                }
+                            ]
+                        };
+                        ageChart.setOption(age_option);
+                        // 統計報考人就讀學校科系
+                        var schoolChart = echarts.init(document.getElementById('school'));
+                        var school_option = {
+                            color: ['#3398DB'],
+                            tooltip : {
+                                trigger: 'axis',
+                                axisPointer : {
+                                    type : 'shadow'
+                                }
+                            },
+                            grid: {
+                                left: '1%',
+                                right: '2%',
+                                bottom: '1%',
+                                containLabel: true
+                            },
+                            yAxis : [
+                                {
+                                    type : 'category',
+                                    data:statistics_data['school_department'],
+                                    axisTick: {
+                                        alignWithLabel: true
+                                    }
+                                }
+                            ],
+                            xAxis : [
+                                {
+                                    type : 'value'
+                                }
+                            ],
+                            series : [
+                                {
+                                    name:'報考人數',
+                                    type:'bar',
+                                    barWidth: '20%',
+                                    data:statistics_data['school_count']
+                                }
+                            ]
+                        };
+                        schoolChart.setOption(school_option);
+
 
                     }
                 );
-                console.log(1);
+                // console.log(1);
+                // console.log(gender_male);
+                // console.log(statistics_data['age_range']['age20']);
+                // console.log(statistics_data['age_range']['age25']);
+                // console.log(statistics_data['age_range']['age30']);
+                // console.log(statistics_data['age_range']['age35']);
+                // console.log(statistics_data['age_range']['age40']);
+                // console.log(statistics_data['age_range']['age45']);
             });
 
         });
+        //******************************************************
+
+        // $.each(temp['gender'], function (index,value) {
+        //     console.log(index+" "+value);
+        // });
+        //******************************************************
+
+        // console.log(gender_male);
 
 
     </script>
-
-
-    <div>
-
-        <?php
-
-        $ntcu_department_search = new NTCUDepartment();
-        foreach ($ntcu_department_search->NTCU_department_search() as $value) {
-            echo '<span class="department">' . $value['department_id'] . '_' . $value['department_name'] . '</span><br>';
-
-            $statistics_data_search = "
-SELECT 
-    candidates_information.candidates_information_gender as gender,
-    candidates_information.candidates_information_birthday as birthday,
-    school.school_id,
-    concat(
-    school.school_name,'_',
-    school.school_department)as school
-FROM
-    Institute_Registration_information
-        INNER JOIN
-    candidates_information
-		inner join
-        school
-WHERE
-    candidates_information_id = candidates_information_candidates_information_id &&
-    Institute_Registration_information.school_school_id = school.school_id &&
-    Institute_Registration_information.ntcu_department_department_id = " . $value['department_id'] . "   
-    order by school_id asc ;";
-
-            $statistics_data = DBconnect::connect()->query($statistics_data_search);
-            $male = 0;
-            $female = 0;
-            $age = 0;
-            $age20 = 0;
-            $age25 = 0;
-            $age30 = 0;
-            $age35 = 0;
-            $age40 = 0;
-            $age45 = 0;
-            //
-
-            foreach ($statistics_data as $statistics) {
-
-                // 統計報考科系男女人數
-                if ($statistics['gender'] === '男') {
-                    $male = $male + 1;
-                } else {
-                    $female = $female + 1;
-                }
-                // 統計報考科系年齡區間
-                $age = date("Y") - substr($statistics['birthday'], 0, 4);
-                if ($age <= 22) {
-                    $age20 = $age20 + 1;
-                } elseif ($age > 22 && $age <= 25) {
-                    $age25 = $age25 + 1;
-                } elseif ($age > 25 && $age <= 30) {
-                    $age30 = $age30 + 1;
-                } elseif ($age > 30 && $age <= 35) {
-                    $age35 = $age35 + 1;
-                } elseif ($age > 35 && $age <= 40) {
-                    $age40 = $age40 + 1;
-                } else {
-                    $age45 = $age45 + 1;
-                }
-
-
-            }
-            // 統計報考學校畢業學校和科系的人數
-            $statistics_school = "    
-SELECT 
-count(school_id) as count ,school_id,school_name,school_department
-FROM
-    Institute_Registration.Institute_Registration_information
-        INNER JOIN
-    school
-    
-WHERE
-    school_school_id = school_id
-        AND ntcu_department_department_id = '" . $value['department_id'] . "'group by school_id order by school_id;";
-            $school_data = DBconnect::connect()->query($statistics_school);
-
-            echo '男生共 <span class="sum">' . $male . '</span> 人<br>';
-            echo '女生共 <span class="sum">' . $female . '</span> 人<br>';
-            echo '<br>';
-            echo ' &nbsp 小於21歲共<span class="sum">' . $age20 . '</span>人<br>';
-            echo ' &nbsp 介於22歲到25歲之間共<span class="sum">' . $age25 . '</span>人<br>';
-            echo ' &nbsp 介於26歲到30歲之間共<span class="sum">' . $age30 . '</span>人<br>';
-            echo ' &nbsp 介於31歲到35歲之間共<span class="sum">' . $age35 . '</span>人<br>';
-            echo ' &nbsp 介於36歲到40歲之間共<span class="sum">' . $age40 . '</span>人<br>';
-            echo ' &nbsp 大於41歲共<span class="sum">' . $age45 . '</span>人<br>';
-            echo '<br>';
-            foreach ($school_data as $key => $school) {
-                if ($key % 2 == 0) {
-                    echo $key . ' <span class="school">' . $school['school_name'] . ' ' . $school['school_department'] . '</span>>共<span class="sum">' . $school['count'] . '</span>人.<br>';
-                } else {
-                    echo $key . ' ' . $school['school_name'] . ' ' . $school['school_department'] . '共<span class="sum">' . $school['count'] . '</span>人.<br>';
-                }
-            }
-
-
-        }// NTCU 依科系
-
-
-        ?>
-
-        <table>
-
-        </table>
-
-    </div>
 </div>
 
 </body>
