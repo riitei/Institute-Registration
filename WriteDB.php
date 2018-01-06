@@ -13,6 +13,6 @@ if ($message != '') {
 }
 ?>
 <script>
-    // history.back();
+     history.back();
 </script>
 
