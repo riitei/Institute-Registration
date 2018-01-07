@@ -15,39 +15,32 @@
 <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
 <div id="school" style="width: 600px;height:400px;"></div>
 <?php
+$age_value = array();
+$age_value[0]=5;
+$age_value[1]=22;
+$age_value[2]=26;
+$age_value[3]=31;
+$age_value[4]=36;
+$age_value[5]=41;
+
+
+$age_name = array();
+$age_name[0] = "小於21歲".$age_value[0]."人";
+$age_name[1] = "介於22歲到25歲之間$age_value[1]人";
+$age_name[2] = "介於26歲到30歲之間$age_value[2]人";
+$age_name[3] = "介於31歲到35歲之間$age_value[3]人";
+$age_name[4] = "介於36歲到40歲之間$age_value[4]人";
+$age_name[5] = "大於41歲$age_value[5]人";
+
+$age_range_name = json_encode($age_name, true);
+
 $age = array();
-$age[0]=20;
-$age[1]=22;
-$age[2]=26;
-$age[3]=31;
-$age[4]=36;
-$age[5]=41;
+foreach ($age_value as $key=>$value){
+    $age[$key]["value"] = $age_value[$key];
+    $age[$key]["name"] = $age_name[$key];
+}
 
-
-$age1 = array();
-$age1[0] = "小於21歲".$age[0]."人";
-$age1[1] = "介於22歲到25歲之間$age[1]人";
-$age1[2] = "介於26歲到30歲之間$age[2]人";
-$age1[3] = "介於31歲到35歲之間$age[3]人";
-$age1[4] = "介於36歲到40歲之間$age[4]人";
-$age1[5] = "大於41歲$age[5]人";
-
-$_age = json_encode($age1, true);
-
-$age2 = array();
-$age2[0]["value"] = $age[0];
-$age2[0]["name"] = $age1[0];
-$age2[1]["value"] = $age[1];
-$age2[1] ["name"] = $age1[1];
-$age2[2]["value"] = $age[2];
-$age2[2] ["name"] = $age1[2];
-$age2[3]["value"] = $age[3];
-$age2[3] ["name"] = $age1[3];
-$age2[4]["value"] = $age[4];
-$age2[4] ["name"] = $age1[4];
-$age2[5]["value"] = $age[5];
-$age2[5] ["name"] = $age1[5];
-$_age2 = json_encode($age2,true);
+$age_range = json_encode($age,true);
 
 ?>
 
@@ -56,7 +49,7 @@ $_age2 = json_encode($age2,true);
 <div id="school" style="width: 600px;height:2048px;"></div>
 <script>
     console.log(2);
-    console.log(<?=$_age?>);
+    console.log(<?=$age_range_name?>);
     // 報考年紀區間
     // var age_range_age20 = statistics_data['age_range']['age20'];
     // var age_range_age25 = statistics_data['age_range']['age25'];
@@ -82,7 +75,7 @@ $_age2 = json_encode($age2,true);
         legend: {
             orient: 'vertical',
             x: 'left',
-            data:<?=$_age?>
+            data:<?=$age_range_name?>
             // ['小於21歲' + age_range_age[0] + '人',
             // '介於22歲到25歲之間' + 22 + '人',
             // '介於26歲到30歲之間' + 26 + '人',
@@ -114,7 +107,7 @@ $_age2 = json_encode($age2,true);
                         show: false
                     }
                 },
-                data: <?=$_age2?>
+                data: <?=$age_range?>
                 //     [
                 //     {"value": 10, "name": "小於21歲10人"},
                 //     {"value": 22, "name": '介於22歲到25歲之間' + 22 + '人'},
