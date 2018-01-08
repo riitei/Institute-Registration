@@ -41,6 +41,10 @@ $data = array();
 $age_range = array();
 $school_department = array();
 $school_count = array();
+$age_value = array();
+$age_name = array();
+
+
 //
 foreach ($statistics_data as $statistics) {
 
@@ -88,15 +92,37 @@ WHERE
 }
 $gender['male'] = $male;
 $gender['female'] = $female;
-$age_range['age20'] = $age20;
-$age_range['age25'] = $age25;
-$age_range['age30'] = $age30;
-$age_range['age35'] = $age35;
-$age_range['age40'] = $age40;
-$age_range['age45'] = $age45;
+
+$age_value[0] = $age20;
+$age_value[1] = $age25;
+$age_value[2] = $age30;
+$age_value[3] = $age35;
+$age_value[4] = $age40;
+$age_value[5] = $age45;
+
+$age_name[0] = "小於21歲" . $age_value[0] . "人";
+$age_name[1] = "介於22歲到25歲之間$age_value[1]人";
+$age_name[2] = "介於26歲到30歲之間$age_value[2]人";
+$age_name[3] = "介於31歲到35歲之間$age_value[3]人";
+$age_name[4] = "介於36歲到40歲之間$age_value[4]人";
+$age_name[5] = "大於41歲$age_value[5]人";
+
+$age = array();
+foreach ($age_value as $key => $value) {
+    $age[$key]["value"] = $age_value[$key];
+    $age[$key]["name"] = $age_name[$key];
+}
+
+//$age_range['age20'] = $age20;
+//$age_range['age25'] = $age25;
+//$age_range['age30'] = $age30;
+//$age_range['age35'] = $age35;
+//$age_range['age40'] = $age40;
+//$age_range['age45'] = $age45;
 
 $data['gender'] = $gender;
-$data['age_range'] = $age_range;
+$data['age_range_name'] = $age_name;
+$data['age_range'] = $age;
 $data['school_department'] = $school_department;
 $data['school_count'] = $school_count;
 echo json_encode($data, true);

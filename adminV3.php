@@ -149,12 +149,12 @@
                         };
                         genderChart.setOption(genderOption);
                         // 報考年紀區間
-                        var age_range_age20 = statistics_data['age_range']['age20'];
-                        var age_range_age25 = statistics_data['age_range']['age25'];
-                        var age_range_age30 = statistics_data['age_range']['age30'];
-                        var age_range_age35 = statistics_data['age_range']['age35'];
-                        var age_range_age40 = statistics_data['age_range']['age40'];
-                        var age_range_age45 = statistics_data['age_range']['age45'];
+                        // var age_range_age20 = statistics_data['age_range']['age20'];
+                        // var age_range_age25 = statistics_data['age_range']['age25'];
+                        // var age_range_age30 = statistics_data['age_range']['age30'];
+                        // var age_range_age35 = statistics_data['age_range']['age35'];
+                        // var age_range_age40 = statistics_data['age_range']['age40'];
+                        // var age_range_age45 = statistics_data['age_range']['age45'];
                         var ageChart = echarts.init(document.getElementById('age'));
                         var age_option = {
                             tooltip: {
@@ -164,12 +164,13 @@
                             legend: {
                                 orient: 'vertical',
                                 x: 'left',
-                                data: ['小於21歲' + age_range_age20 + '人',
-                                    '介於22歲到25歲之間' + age_range_age25 + '人',
-                                    '介於26歲到30歲之間' + age_range_age30 + '人',
-                                    '介於31歲到35歲之間' + age_range_age35 + '人',
-                                    '介於36歲到40歲之間' + age_range_age40 + '人',
-                                    '大於41歲' + age_range_age45 + '人']
+                                data: statistics_data['age_range_name']
+                                // ['小於21歲' + age_range_age20 + '人',
+                                // '介於22歲到25歲之間' + age_range_age25 + '人',
+                                // '介於26歲到30歲之間' + age_range_age30 + '人',
+                                // '介於31歲到35歲之間' + age_range_age35 + '人',
+                                // '介於36歲到40歲之間' + age_range_age40 + '人',
+                                // '大於41歲' + age_range_age45 + '人']
                             },
                             series: [
                                 {
@@ -195,14 +196,15 @@
                                             show: false
                                         }
                                     },
-                                    data: [
-                                        {value: age_range_age20, name: '小於21歲' + age_range_age20 + '人'},
-                                        {value: age_range_age25, name: '介於22歲到25歲之間' + age_range_age25 + '人'},
-                                        {value: age_range_age30, name: '介於26歲到30歲之間' + age_range_age30 + '人'},
-                                        {value: age_range_age35, name: '介於31歲到35歲之間' + age_range_age35 + '人'},
-                                        {value: age_range_age40, name: '介於36歲到40歲之間' + age_range_age40 + '人'},
-                                        {value: age_range_age45, name: '大於41歲共' + age_range_age45 + '人'}
-                                    ]
+                                    data: statistics_data['age_range']
+                                    // [
+                                    //     {value: age_range_age20, name: '小於21歲' + age_range_age20 + '人'},
+                                    //     {value: age_range_age25, name: '介於22歲到25歲之間' + age_range_age25 + '人'},
+                                    //     {value: age_range_age30, name: '介於26歲到30歲之間' + age_range_age30 + '人'},
+                                    //     {value: age_range_age35, name: '介於31歲到35歲之間' + age_range_age35 + '人'},
+                                    //     {value: age_range_age40, name: '介於36歲到40歲之間' + age_range_age40 + '人'},
+                                    //     {value: age_range_age45, name: '大於41歲共' + age_range_age45 + '人'}
+                                    // ]
                                 }
                             ]
                         };
@@ -211,10 +213,10 @@
                         var schoolChart = echarts.init(document.getElementById('school'));
                         var school_option = {
                             color: ['#3398DB'],
-                            tooltip : {
+                            tooltip: {
                                 trigger: 'axis',
-                                axisPointer : {
-                                    type : 'shadow'
+                                axisPointer: {
+                                    type: 'shadow'
                                 }
                             },
                             grid: {
@@ -223,26 +225,26 @@
                                 bottom: '1%',
                                 containLabel: true
                             },
-                            yAxis : [
+                            yAxis: [
                                 {
-                                    type : 'category',
-                                    data:statistics_data['school_department'],
+                                    type: 'category',
+                                    data: statistics_data['school_department'],
                                     axisTick: {
                                         alignWithLabel: true
                                     }
                                 }
                             ],
-                            xAxis : [
+                            xAxis: [
                                 {
-                                    type : 'value'
+                                    type: 'value'
                                 }
                             ],
-                            series : [
+                            series: [
                                 {
-                                    name:'報考人數',
-                                    type:'bar',
+                                    name: '報考人數',
+                                    type: 'bar',
                                     barWidth: '20%',
-                                    data:statistics_data['school_count']
+                                    data: statistics_data['school_count']
                                 }
                             ]
                         };
